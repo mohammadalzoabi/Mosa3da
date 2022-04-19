@@ -4,12 +4,18 @@ const mongoose = require('mongoose')
 const flash = require('connect-flash')
 const session = require('express-session')
 const passport = require('passport')
+const path = require('path');
 
 const app = express()
 
 
 //Passport Config
 require('./config/passport')(passport)
+
+
+//Multer Config
+//app.use(multer().single('image'))
+
 
 //DB Config
 const db = require('./config/keys').MongoURI;
@@ -22,6 +28,7 @@ mongoose.connect(db, { useNewUrlParser: true })
 //EJS
 app.use(expressLayouts)
 app.set('view engine', 'ejs')
+app.set('views', 'views');
 
 
 //BodyParser
@@ -30,13 +37,20 @@ app.use(express.urlencoded({extended: false}))
 
 //Express Session
 app.use(session({
-    secret: 'mosa3dat', resave: true, saveUninitialized: true
+    secret: 'mosa3da', resave: true, saveUninitialized: true
 }))
 
 
 //Passport Middleware
 app.use(passport.initialize())
 app.use(passport.session())
+
+
+
+
+//Folders configs
+app.use(express.static(path.join(__dirname, 'public')));
+app.use('/images', express.static(path.join(__dirname, 'images')));
 
 
 //Connect Flash
@@ -56,7 +70,6 @@ app.use((req, res, next) => {
 //Routes
 app.use('/', require('./routes/index'))
 app.use('/', require('./routes/users'))
-
 
 
 const PORT = process.env.PORT || 5000

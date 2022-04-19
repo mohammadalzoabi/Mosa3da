@@ -2,6 +2,8 @@ const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 const passport = require('passport')
 
+const fileHelper = require('../util/file');
+
 
 // Login Exports
 exports.getLogin = (req, res, next) => {
@@ -13,6 +15,8 @@ exports.getLogin = (req, res, next) => {
     }
     res.render('login', {
         path:'/login',
+        pageTitle: 'Signup',
+        name:'login',
         errorMessage: message,
         oldInput: {
             email: "",
@@ -41,22 +45,25 @@ exports.getSignup = (req, res, next) => {
     }
     res.render('signup', {
         path:'/signup',
+        pageTitle: 'Signup',
         errorMessage: message,
+        name:'signup',
         oldInput: {
             name:"",
             email: "",
             password: "",
-            confirmPassword: ""
+            confirmPassword: "",
+            gender: ""
         },
         validationErrors: []
     });
 };
 exports.postSignup = (req, res, next) => {
-    const { name, email, password, confirmPassword } = req.body
+    const { name, email, password, confirmPassword, gender } = req.body
     let errors = []
 
     //Check Required Fields
-    if(!name || !email || !password || !confirmPassword) {
+    if(!name || !email || !password || !confirmPassword || !gender) {
         errors.push({msg: 'Please fill the required info'})
     }
     //Check Matching Password
@@ -88,7 +95,8 @@ exports.postSignup = (req, res, next) => {
                 const newUser = new User({
                     name,
                     email,
-                    password
+                    password,
+                    gender
                 })
                 //Hashing The Password
                 bcrypt.genSalt(10, (err, salt) => 
@@ -115,9 +123,79 @@ exports.postSignup = (req, res, next) => {
 }
 
 
-
+// Logout Export
 exports.getLogout = (req, res, next) => {
     req.logout();
     req.flash('success_msg', "Logged out successfully")
     res.redirect('/')
 }
+
+
+
+// Edit Account Exports
+exports.getEditAccount = (req, res, next) => {
+    User.findOne({email : req.user.email})
+        .then(user => {
+            res.render('user-profile-edit', {
+                user: user, 
+                pageTitle: 'Edit Account', 
+                path: '/edit-account',
+                name: 'Edit Account'
+            });
+        })
+        .catch(err => {
+            console.log('didnt find user account, edit account section!')
+            const error = new Error(err);
+            error.httpStatusCode = 500;
+            return next(error);
+          });
+}
+exports.postEditAccount = (req, res, next) => {
+    const { name, email, gender } = req.body
+
+    const image = req.file
+    let errors = []
+
+    //Check Required Fields
+    if(!name || !email || !gender) {
+        errors.push({msg: 'Cannot leave fields empty'})
+    }
+
+        if(errors.length > 0) {
+            console.log(errors)
+            User.findOne({email : req.user.email})
+                .then(user => {
+                    res.render('user-profile-edit', {
+                        errors: errors,
+                        user: user, 
+                        pageTitle: 'Account', 
+                        path: '/edit-account'
+                    });
+                })
+                .catch(err => {
+                    console.log('didnt find user account, edit account section!')
+                    const error = new Error(err);
+                    error.httpStatusCode = 500;
+                    return next(error);
+                });
+        } else {
+            User.findOne({email : req.user.email})
+            .then(user => {
+                user.name = name;
+                user.email = email;
+                user.gender = gender;
+                if(image) {
+                    fileHelper.deleteFile(user.image);
+                    user.image = image.path;
+                }
+
+                return user.save().
+                    then(result => {
+                        res.redirect('/account');
+                })
+            })
+            .catch(err => {
+                console.log(err)
+            });
+        }
+    }

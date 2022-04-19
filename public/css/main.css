@@ -1,0 +1,93 @@
+    .logo-image {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+  }
+    * {
+        margin: 0;
+        padding: 0;
+    }
+    .imgbox {
+        display: grid;
+        height: 100%;
+    }
+    .center-fit {
+        max-width: 100%;
+        max-height: 100%;
+        margin: auto;
+    }
+    .product-item {
+        width: 15rem;
+        max-width: 100%;
+        margin: 20px;
+    }
+
+    .user__name {
+        font-size: 1rem;
+        text-align: center;
+    }
+
+    .user__email {
+        text-align: center;
+        color: #4d4d4d;
+        margin-bottom: 0.5rem;
+    }
+
+    .user__role {
+        text-align: center;
+    }
+    .card {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+    }
+    .card__header,
+    .card__content {
+    padding: 1rem;
+    }
+
+    .card__header h1,
+    .card__content h1,
+    .card__content h2,
+    .card__content p {
+    margin: 0;
+    }
+
+    .card__image {
+    width: 100%;
+    }
+
+    .card__image img {
+    width: 100%;
+    
+    }
+
+    .card__actions {
+    padding: 1rem;
+    text-align: center;
+    }
+
+    .card__actions button,
+    .card__actions a {
+    margin: 0 0.25rem;
+    }
+    .pagination {
+    text-align: center;
+    margin-top: 2rem;
+
+    }
+
+    .pagination a {
+    text-decoration: none;
+    color: black;
+    padding: 0.5rem;
+    border: 2px solid blanchedalmond;
+    margin: 0 1rem;
+    }
+
+    .pagination a:hover,
+    .pagination a:active,
+    .pagination a.active {
+    background: blanchedalmond;
+    color: black;
+    border: 2px solid black;
+    }

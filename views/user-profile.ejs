@@ -1,0 +1,61 @@
+<%- include('./includes/head.ejs') %>
+    <link rel="stylesheet" type="text/css" href="/css/main.css">
+    <link rel="stylesheet" type="text/css" href="/css/account.css">
+</head>
+<body>
+    <%- include('./includes/navbar.ejs') %>
+
+
+
+
+
+    <div class="page-content page-container" id="page-content" style="margin-top: 150px; ">
+        <div class="padding">
+            <div class="row container d-flex justify-content-center">
+                <div class="col-xl-12 col-md-12">
+                    <div class="card user-card-full">
+                        <div class="row m-l-0 m-r-0">
+                            <div class="col-sm-4 user-profile" style="background-color: #79B4B7;">
+                                <div class="card-block text-center text-white">
+                                    <div class="m-b-25"> <img src="<%= user.image %>" class="img-radius" alt="User-Profile-Image" style="max-width: 50%; max-height: 50%;"> </div>
+                                    <h5 class="f-w-600"><%= user.name %></h5>
+                                </div>
+                            </div>
+                            <div class="col-sm-8">
+                                <div class="card-block">
+                                    <h4 class="m-b-20 p-b-5 b-b-default f-w-600">Information</h4>
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <p class="m-b-10 f-w-600">Email</p>
+                                            <h5 class="text-muted f-w-400"><%= user.email %></h5>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <p class="m-b-10 f-w-600">Gender</p>
+                                            <h5 class="text-muted f-w-400"><%= user.gender %></h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="text-center" style="margin-top: -50px;">
+        <i class="fas fa-edit"></i>  <a class="lead text-center" href="/edit-account" style="color: black; font-weight: 300;"> Edit Profile </a>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+</body>
+</html>

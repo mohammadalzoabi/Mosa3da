@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-const UserSchema = new mongoose.Schema({
+const UserSchema = new Schema({
     name: {
         type: String,
         required: true
@@ -13,6 +14,19 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    image: {
+        type: String,
+        required: false,
+        default: "https://i.imgur.com/fUWz80K.jpg"
+    },
+    gender: {
+        type: String,
+        required: true
+    },
+    // birthDate: {
+    //     type: Date,
+    //     required: true
+    // },
     date: {
         type: Date,
         default: Date.now
@@ -23,6 +37,4 @@ const UserSchema = new mongoose.Schema({
     }
 })
 
-const User = mongoose.model('User', UserSchema)
-
-module.exports = User;
+module.exports =  mongoose.model('User', UserSchema)

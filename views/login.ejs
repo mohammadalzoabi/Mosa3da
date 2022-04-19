@@ -1,20 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sign in</title>
-  <style>
-    .logo-image {
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      overflow: hidden;
-      
-  }
-  </style>
+<%- include('./includes/head.ejs') %>
+  <link rel="stylesheet" href="/css/main.css">
 </head>
+
+
 <body style="background-color: #FEFBF3;">
 
   <div class = "navbar navbar-expand-lg fixed-top nabvar-light" style="background-color: #FEFBF3; box-shadow: 0 2px 4px 0 rgba(0,0,0,.2);"></div>
@@ -32,14 +20,13 @@
                 <a target="_blank" rel="noopener" class="nav-link" href="https://github.com/thomaspark/bootswatch/"><i class="fa fa-globe" aria-hidden="true"></i> العربية</a>
               </li>
             </ul>
-
           </div>
         </div>
       </div>
 
 <div class="row mt-5" style="padding-top: 5em;">
     <div class="col-md-6 m-auto">
-      <div class="card card-body" style="background-color: #FEFBF3; border: 0cm;">
+      <div class="card card-body" style="background-color: #FEFBF3; border: 0cm; box-shadow: 0 0 0 0">
         <h1 class="lead text-center" style="font-size: 3em; font-weight: 400; color: black;">Sign in to your Account</h1>
         <h1 class="lead text-center" style="color: black;">Nice to see you again!</h1>
         <%- include("./partials/errorMessages.ejs") %>
@@ -73,5 +60,6 @@
     </div>
   </div>
 
+  
 </body>
 </html>

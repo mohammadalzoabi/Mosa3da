@@ -1,21 +1,34 @@
 const express = require('express')
 const router = express.Router()
-const isAuth = require('../config/auth2');
+const isLoggedIn = require('../config/auth2');
+const isNotLoggedIn = require('../config/auth')
 
 const authController = require('../controllers/auth');
+const upload = require('../middleware/imageUpload')
 
 
 //Login
-router.get('/login', isAuth, authController.getLogin)
+router.get('/login', isLoggedIn, authController.getLogin)
 router.post('/login', authController.postLogin)
 
 
 
 //Signup
-router.get('/signup' , isAuth, authController.getSignup)
+router.get('/signup' , isLoggedIn, authController.getSignup)
 router.post('/signup', authController.postSignup)
 
 
+
+//Logout
 router.get('/logout' , authController.getLogout)
+
+
+
+//User Account
+router.get('/edit-account', isNotLoggedIn, authController.getEditAccount)
+router.post('/edit-account', upload.single('image'), isNotLoggedIn, authController.postEditAccount)
+
+
+
 
 module.exports = router

@@ -1,0 +1,132 @@
+<%- include('./includes/head.ejs') %>
+    <link rel="stylesheet" href="/css/main.css">
+</head>
+
+
+<body>
+    
+    <div class="navbar navbar-expand-lg fixed-top navbar-light" style="background-color: #FEFBF3; box-shadow: 0 2px 4px 0 rgba(0,0,0,.2);">
+        <div class="container">
+          <a href="/"> <img src="https://i.imgur.com/8u8uTcl.png" class="logo-image" alt="logo" class="img-fluid"></a>
+          <a href="/" class="navbar-brand"> Mosa3da</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarResponsive">
+
+            <% if (isAuthenticated) { %>
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link" href="/dashboard">My Sessions</a>
+              </li>
+              <li class="nav-item"s>
+                <a class="nav-link active" href="/therapists">Therapist List</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="../">Tests</a>
+              </li>
+            </ul>
+
+              <ul class="navbar-nav ms-md-auto">
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">temp</a>
+                    <ul class="dropdown-menu">
+                      <li><a class="dropdown-item" href="#">Account</a></li>
+                      <li><a class="dropdown-item" href="#">Settings</a></li>
+                      <li><hr class="dropdown-divider"></li>
+                      <li><a class="dropdown-item" href="/logout">Log out</a></li>
+                    </ul>
+                  </li>
+                  <li class="nav-item">
+                    <a target="_blank" rel="noopener" class="nav-link" href="https://github.com/thomaspark/bootswatch/"><i class="fa fa-globe" aria-hidden="true"></i> العربية</a>
+                  </li>
+            </ul>
+
+            <% }  else { %>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                      <a class="nav-link" href="../">What is Mosa3da</a>
+                    </li>
+                    <li class="nav-item"s>
+                      <a class="nav-link active" href="../">Therapist List</a>
+                    </li>
+                  </ul>
+
+              <ul class="navbar-nav ms-md-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/signup">Sign Up</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="/login">Sign In</a>
+                  </li>
+              <li class="nav-item">
+                <a target="_blank" rel="noopener" class="nav-link" href="https://github.com/thomaspark/bootswatch/"><i class=""></i> Get Started</a>
+              </li>
+              <li class="nav-item">
+                <a target="_blank" rel="noopener" class="nav-link" href="https://github.com/thomaspark/bootswatch/"><i class="fa fa-globe" aria-hidden="true"></i> العربية</a>
+              </li>
+            </ul>
+            <% }  %>
+          </div>
+        </div>
+      </div>
+
+
+
+      
+    <main style="margin-top: 100px; ">
+        <% if (usersAll.length > 0) { %>
+            <div style="display: flex; justify-content: center; align-items: stretch; flex-wrap: wrap;">
+                <% for (let user of usersAll) { %>
+                    <article class="card product-item">
+                        <header class="card__header">
+                            <h3 class="user__name"> <%= user.name %> </h3>
+                        </header>
+                        <div class="card__image">
+                            <img src="<%= user.image %>" style="max-width: 100%; max-height: 100%;">
+                        </div>
+                        <div class="card__content">
+                            <p class="user__email"><%= user.email %></p>
+                            <p class="user__role"> <%= user.role %> </p>
+                        </div>
+                    </article>
+                    <% } %>
+            </div>
+            <section class="pagination">
+                <% if (currentPage != 1 && previousPage != 1) { %>
+                    <a href="?page=1">1</a>
+                <% } %>
+
+                <% if (currentPage === lastPage && lastPage > 3) { %>
+                    <a>...</a>
+                <% } %>
+
+                <% if (hasPreviousPage) { %>
+                    <a href="?page=<%= previousPage %>"><%= previousPage %></a>
+                <% } %>
+
+                <a href="?page=<%= currentPage %>" class="active"><%= currentPage %></a>
+
+                <% if (hasNextPage) { %>
+                <a href="?page=<%= nextPage %>"><%= nextPage %></a>
+                <% } %>
+
+                <% if (currentPage === 1 && lastPage > 3) { %>
+                    <a>...</a>
+                <% } %>
+
+                <% if (lastPage !== currentPage && nextPage !== lastPage) { %>
+                <a href="?page=<%= lastPage %>"><%= lastPage %></a>
+                <% } %>
+            </section>
+            <% } else { %>
+                <h1>No therapists Available.</h1>
+            <% } %>
+    </main>
+
+
+
+
+
+</body>
+</html>
