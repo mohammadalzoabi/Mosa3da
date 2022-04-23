@@ -6,7 +6,7 @@ const ITEMS_PER_PAGE = 9;
 // Get Index
 exports.getIndex = (req, res, next) => {
     res.render('home', {
-        name: 'home',
+        pageName: 'home',
         path: '/',
         pageTitle: 'Mosa3da',
     })
@@ -21,7 +21,7 @@ exports.getDashboard = (req, res, next) => {
                 user: user, 
                 pageTitle: 'Dashboard', 
                 path: '/dashboard',
-                name: 'dashboard',
+                pageName: 'dashboard',
             });
         })
         .catch(err => {
@@ -47,9 +47,9 @@ exports.getTherapists = (req, res, next) => {
                 .limit(ITEMS_PER_PAGE)
         })
         .then(users => {
-            console.log(users);
             res.render('therapist-List', {
-                name:'therapist list',
+                user: req.user,
+                pageName:'therapist list',
                 usersAll: users,
                 pageTitle: 'Therapist List',
                 path:'/dashboard',
@@ -78,7 +78,7 @@ exports.getAccount = (req,res,next) => {
                 user: user, 
                 pageTitle: 'Account', 
                 path: '/account',
-                name: 'account'
+                pageName: 'account'
             });
         })
         .catch(err => {

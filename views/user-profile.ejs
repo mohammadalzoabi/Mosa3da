@@ -1,6 +1,7 @@
 <%- include('./includes/head.ejs') %>
     <link rel="stylesheet" type="text/css" href="/css/main.css">
     <link rel="stylesheet" type="text/css" href="/css/account.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 </head>
 <body>
     <%- include('./includes/navbar.ejs') %>
@@ -9,8 +10,9 @@
 
 
 
-    <div class="page-content page-container" id="page-content" style="margin-top: 150px; ">
+    <div class="page-content page-container" id="page-content" style="margin-top: 100px; ">
         <div class="padding">
+            <h4 class="text-center" style="margin-bottom: 25px;">Profile</h4>
             <div class="row container d-flex justify-content-center">
                 <div class="col-xl-12 col-md-12">
                     <div class="card user-card-full">
@@ -53,7 +55,40 @@
 
 
 
+<% if(user.role === 'therapist') { %>
+        
+        <form action="/add-new-session", method="POST" style="margin-top: 75px;">
+            <h4 class="text-center" style="margin-bottom: 25px;">Add New Session</h4>
+            <div class="text-center" style="max-width: 25%; text-align: center; margin: auto;">
+                <input type="datetime-local" placeholder="Select Time and Date" id="sessionTime" name="sessionTime" >
+                <select name="duration" class="form-select" style="margin-top: 10px;">
+                    <option selected>Session Duration (In Minutes)</option>
+                    <option id="duration" value="15 Minutes" name="duration">15</option>
+                    <option id="duration" value="30 Minutes" name="duration">30</option>
+                    <option id="duration" value="45 Minutes" name="duration">45</option>
+                    <option id="duration" value="60 Minutes" name="duration">60</option>
+                  </select>
+            </div>
+            <div class="text-center" style="margin-top: 10px;">
+                <button type="submit" class="btn btn-primary btn-block" style="background-color: #79B4B7; border-color: #79B4B7; border-radius: 50px; font-size: 1em; padding-right: 1cm; padding-left: 1cm;">Add Available Session</button>
+            </div>
+        </form>
+<% } %>
 
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+<script>
+    config = {
+        enableTime: true,
+        dateFormat: "Y-m-d H:i",
+        altInput: true,
+        altFormat: "F j, Y (h:S K)"
+    }
+    flatpickr("input[type=datetime-local]", config)
+</script>
 
 
 

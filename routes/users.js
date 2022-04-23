@@ -19,6 +19,12 @@ router.post('/signup', authController.postSignup)
 
 
 
+//Therapist Join Us Form
+router.get('/join-us', isLoggedIn, authController.getJoinUs)
+router.post('/join-us', isLoggedIn, authController.postJoinUs)
+
+
+
 //Logout
 router.get('/logout' , authController.getLogout)
 

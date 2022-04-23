@@ -1,0 +1,77 @@
+<%- include('./includes/head.ejs') %>
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+
+
+<body style="background-color: #FEFBF3;">
+  
+  <div class = "navbar navbar-expand-lg fixed-top nabvar-light" style="background-color: #FEFBF3; box-shadow: 0 2px 4px 0 rgba(0,0,0,.2);"></div>
+    <div class="navbar navbar-expand-lg fixed-top navbar-light" style="background-color: #FEFBF3; box-shadow: 0 2px 4px 0 rgba(0,0,0,.2);">
+        <div class="container">
+          <a href="/"> <img src="https://i.imgur.com/8u8uTcl.png" class="logo-image" alt="logo" class="img-fluid"></a>
+          <a href="../" class="navbar-brand">Mosa3da</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarResponsive">
+
+            <ul class="navbar-nav ms-md-auto">
+              <li class="nav-item">
+                <a target="_blank" rel="noopener" class="nav-link" href="https://github.com/thomaspark/bootswatch/"><i class="fa fa-globe" aria-hidden="true"></i> العربية</a>
+              </li>
+            </ul>
+
+          </div>
+        </div>
+      </div>
+
+<div class="row mt-5" style="padding-top: 5em;">
+    <div class="col-md-6 m-auto">
+      <div class="card card-body" style="background-color: #FEFBF3; border: 0cm; box-shadow: 0 0 0 0"">
+        <h1 class="lead text-center" style="font-size: 3em; font-weight: 400; color: black;">Thank You for Offering Mosa3da!</h1>
+        <%- include("./partials/errorMessages.ejs") %>
+        <form action="join-us" method="POST">
+          <div class="form-group" style="padding: 1em;">
+            <input style=" border-radius:10px;"
+              type="name"
+              id="name"
+              name="name"
+              class="form-control"
+              placeholder="Full Name"
+              value="<%= typeof name != 'undefined' ? name : '' %>"
+            />
+          </div>
+          <div class="form-group" style="padding: 1em;">
+            <input style=" border-radius:10px;"
+              type="email"
+              id="email"
+              name="email"
+              class="form-control"
+              placeholder="Email"
+              value="<%= typeof email != 'undefined' ? email : '' %>"
+            />
+          </div>
+
+          <div class="text-center" style="margin: 10px;">
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="gender" id="gender" value="Male">
+              <label class="form-check-label" for="inlineRadio1">Male</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="gender" id="gender" value="Female">
+              <label class="form-check-label" for="inlineRadio2">Female</label>
+            </div>
+          </div>
+          
+          
+
+          <div class="text-center">
+            <button type="submit" class="btn btn-primary btn-block" style="background-color: #79B4B7; border-color: #79B4B7; border-radius: 50px; font-size: 1em; padding-right: 1cm; padding-left: 1cm; margin-top: 10px;">Send Application</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

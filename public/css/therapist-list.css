@@ -1,0 +1,117 @@
+.profile-card,.profile-card {
+    background:#FEFBF3;
+    box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.26);
+}
+.img-area {
+    background:#F8F0DF;
+    box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.26);
+}
+.buttons button{
+    background:#F8F0DF;
+    box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.15);
+}
+
+.profile-card {
+    width:350px;
+    padding:30px;
+    border-radius:10px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column
+}
+
+.profile-card .icon {
+    font-size:17px;
+    color:#31344b;
+    position:absolute;
+    cursor:pointer;
+    opacity:0.7;
+    top:15px;
+    height:35px;
+    width:35px;
+    text-align:center;
+    line-height:35px;
+    border-radius:50%;
+    font-size:16px
+}
+
+.profile-card .img-area {
+    height:150px;
+    width:150px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center
+}
+
+.img-area .inner-area {
+    height:calc(100% - 25px);
+    width:calc(100% - 25px);
+    border-radius:50%}
+
+.inner-area img {
+    height:100%;
+    width:100%;
+    border-radius:50%;
+    object-fit:cover
+}
+
+.profile-card .name {
+    font-size:23px;
+    font-weight:500;
+    color:#31344b;
+    margin:10px 0 5px 0
+}
+
+.profile-card .about {
+    color:#44476a;
+    font-weight:400;
+    font-size:16px
+}
+
+.profile-card .icon:hover::before,.buttons button:hover:before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:0;
+    bottom:0;
+    right:0;
+    border-radius:50%;
+    background:#ecf0f3;
+    box-shadow:inset 0 0 0 0 #79B4B7,inset 0 0 0 0 #79B4B7
+}
+
+.buttons button:hover:before{
+    z-index:-1;
+    border-radius:5px
+}
+
+.profile-card .buttons{
+    display:flex;
+    width:100%;
+    justify-content:space-between
+}
+
+
+.buttons button{
+    position:relative;
+    width:100%;
+    border:none;
+    outline:none;
+    padding:12px 0;
+    color:#31344b;
+    font-size:17px;
+    font-weight:400;
+    border-radius:5px;
+    cursor:pointer;
+    z-index:4
+}
+
+.buttons button:first-child{
+    margin-right:10px
+}
+
+.buttons button:last-child {
+    margin-left:10px
+}

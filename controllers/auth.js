@@ -16,7 +16,7 @@ exports.getLogin = (req, res, next) => {
     res.render('login', {
         path:'/login',
         pageTitle: 'Signup',
-        name:'login',
+        pageName:'login',
         errorMessage: message,
         oldInput: {
             email: "",
@@ -26,11 +26,33 @@ exports.getLogin = (req, res, next) => {
     });
 };
 exports.postLogin = (req, res, next) => {
-    passport.authenticate('local', {
-        successRedirect: '/dashboard',
-        failureRedirect: '/login',
-        failureFlash: true
-    })(req, res, next)
+    const email = req.body.email
+    let errors = []
+
+    User.findOne({email: email})
+        .then(user => {
+            if(!user) {
+                req.flash('error', 'Invalid Email.')
+                return res.redirect('/login');
+            }
+            if(user.role === 'therapist' && user.acceptedTherapist === 'No') {
+                errors.push({msg: 'Your application is under review.'})
+                res.render('login', {
+                    errors, email, pageTitle: 'Login'
+                })
+            } else {
+                passport.authenticate('local', {
+                    successRedirect: '/dashboard',
+                    failureRedirect: '/login',
+                    failureFlash: true
+                })(req, res, next)      
+            }
+        })
+        .catch(err => {
+            const error = new Error(err);
+            error.httpStatusCode = 500;
+            return next(error);
+          });
 }
 
 
@@ -47,7 +69,7 @@ exports.getSignup = (req, res, next) => {
         path:'/signup',
         pageTitle: 'Signup',
         errorMessage: message,
-        name:'signup',
+        pageName:'signup',
         oldInput: {
             name:"",
             email: "",
@@ -77,7 +99,7 @@ exports.postSignup = (req, res, next) => {
 
     if(errors.length > 0) {
         res.render('signup', {
-            errors, name, email, password, confirmPassword
+            errors, name, email, password, confirmPassword, pageTitle: 'Signup', pageName: 'signup'
         })
     } else {
         console.log("Registeration Completed!")
@@ -89,7 +111,7 @@ exports.postSignup = (req, res, next) => {
             if(user) {
                 errors.push({msg: 'User Already Exists'})
                 res.render('signup', {
-                    errors, name, email, password, confirmPassword
+                    errors, name, email, password, confirmPassword, pageTitle: 'Signup'
                 })
             } else {
                 const newUser = new User({
@@ -111,8 +133,88 @@ exports.postSignup = (req, res, next) => {
                                 passport.authenticate('local', {
                                     successRedirect: '/dashboard',
                                     failureRedirect: '/signup',
-                                    failureFlash: true
+                                    failureFlash: true,
+                                    pageTitle: 'dashboard'
                                 })(req, res, next)})
+                            .catch(err => {
+                                console.log(err)
+                            })
+                }))
+            }
+        })
+    }
+}
+
+
+
+// Join us Exports
+exports.getJoinUs = (req, res, next) => {
+    let message = req.flash('error');
+    if(message.length > 0) {
+        message = message[0];
+    } else {
+        message = null;
+    }
+    res.render('join-us', {
+        path:'/join-us',
+        pageTitle: 'Join Us',
+        errorMessage: message,
+        pageName:'Join Us',
+        oldInput: {
+            name:"",
+            email: "",
+            gender: ""
+        },
+        validationErrors: []
+    });
+}
+exports.postJoinUs = (req, res, next) => {
+    const { name, email, gender } = req.body
+    let errors = []
+
+    //Check Required Fields
+    if(!name || !email || !gender) {
+        errors.push({msg: 'Please fill the required info'})
+    }
+
+    if(errors.length > 0) {
+        res.render('join-us', {
+            errors, name, email, gender, pageTitle: 'Join Us', pageName: 'join-u'
+        })
+    } else {
+        console.log("Registeration Completed!")
+        //Validation Pass
+        User.findOne({
+            email: email
+        })
+        .then(user => {
+            if(user) {
+                errors.push({msg: 'Email is already used'})
+                res.render('join-us', {
+                    errors, name, email, gender, pageTitle: 'Join Us'
+                })
+            } else {
+                const newUser = new User({
+                    name,
+                    email,
+                    password: email + Date.now(),
+                    role: 'therapist',
+                    acceptedTherapist: 'No',
+                    gender
+                })
+                console.log()
+                //Hashing The Password
+                bcrypt.genSalt(10, (err, salt) => 
+                    bcrypt.hash(newUser.password, salt, (err, hash) => {
+                        if(err) console.log(err)
+                        //Set User Password to Hashed Password
+                        newUser.password = hash;
+                        //Save User
+                        newUser.save()
+                            .then(user => {
+                                req.flash('success_msg', 'Thank you.')
+                                res.redirect('/');
+                            })
                             .catch(err => {
                                 console.log(err)
                             })
@@ -140,7 +242,7 @@ exports.getEditAccount = (req, res, next) => {
                 user: user, 
                 pageTitle: 'Edit Account', 
                 path: '/edit-account',
-                name: 'Edit Account'
+                pageName: 'Edit Account'
             });
         })
         .catch(err => {
@@ -169,7 +271,8 @@ exports.postEditAccount = (req, res, next) => {
                         errors: errors,
                         user: user, 
                         pageTitle: 'Account', 
-                        path: '/edit-account'
+                        path: '/edit-account',
+                        pageName: 'Edit Account'
                     });
                 })
                 .catch(err => {
