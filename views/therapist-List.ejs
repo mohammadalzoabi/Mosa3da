@@ -10,7 +10,7 @@
 
   <main style="margin-top: 100px;">
     <% if (usersAll.length > 0) { %>
-        <div style="display: flex; justify-content: flex-start; align-items: stretch; flex-wrap: wrap;">
+        <div style="display: flex; justify-content: center; align-items: stretch; flex-wrap: wrap;">
         <% for (let singleUser of usersAll) { %>
             <% if (singleUser.role ==='therapist') { %>
             <div class="profile-card" style="margin-left: 30px; margin-right: 30px; margin-bottom: 60px;">
@@ -24,11 +24,17 @@
                 <div class="about"><%= singleUser.name %></div>
                     <p style="margin: 15px;"></p>
                 <div class="buttons text-center" style="display: inline-block;">
-                    <button style="margin-bottom: 10px;">View Profile</button>
+
+                    <form action="/therapists/<%=singleUser._id%>">
+                        <button type="submit" style="margin-bottom: 10px;">View Profile</button>
+                        <input type="hidden" name="therapistId" value="<%= singleUser.id %>">
+                    </form>
+
                     <form action="/book" method="POST">
                         <button type="submit">Book</button>
                         <input type="hidden" name="userEmail" value="<%= singleUser.email %>">
                     </form>
+
                 </div>
                 </div>
                 <% } %>

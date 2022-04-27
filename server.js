@@ -13,9 +13,6 @@ const app = express()
 require('./config/passport')(passport)
 
 
-//Multer Config
-//app.use(multer().single('image'))
-
 
 //DB Config
 const db = require('./config/keys').MongoURI;
@@ -65,6 +62,7 @@ app.use((req, res, next) => {
     res.locals.isAuthenticated = req.isAuthenticated()
     next()
 })
+app.locals.moment = require('moment');
 
 
 //Routes

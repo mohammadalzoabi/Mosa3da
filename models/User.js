@@ -53,22 +53,37 @@ const UserSchema = new Schema({
             dateAndTime: {
                 type: Date,
                 required: true
+            },
+
+            duration: {
+                type: String,
+                required: true
+            },
+
+            therapistName: {
+                type: String,
+                required: true
+            },
+
+            customerName: {
+                type: String,
+                required: true
             }
         }]
     },
 
 
     availableDates: {
-        availableDate: [{
-            time: {
-                type: Date,
-                required: true
-            },
+            availableDate: [{
+                time: {
+                    type: Date,
+                    required: true
+                },
 
-            duration: {
-                type: String,
-                required: true
-            }
+                duration: {
+                    type: String,
+                    required: true
+                }
         }]
     }
 
@@ -77,18 +92,17 @@ const UserSchema = new Schema({
 
 })
 
-UserSchema.methods.bookTherapist = function(therapist) {
+UserSchema.methods.bookTherapist = function(therapist, date, duration) {
 
     const booked = [...this.bookings.booking]
-    booked.push({bookingId: therapist._id, dateAndTime: Date.now()})
+    booked.push({bookingId: therapist._id, dateAndTime: date, duration: duration, therapistName: therapist.name, customerName: this.name})
     const updatedBooked = {booking: booked};
     this.bookings = updatedBooked
 
     const sold = [...therapist.bookings.booking]
-    sold.push({bookingId: this._id, dateAndTime: Date.now()})
+    sold.push({bookingId: this._id, dateAndTime: date, duration: duration, therapistName: therapist.name, customerName: this.name})
     const updatedSold = {booking: sold};
     therapist.bookings = updatedSold
-
 
     return therapist.save(), this.save();
 

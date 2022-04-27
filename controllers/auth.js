@@ -182,7 +182,7 @@ exports.postJoinUs = (req, res, next) => {
             errors, name, email, gender, pageTitle: 'Join Us', pageName: 'join-u'
         })
     } else {
-        console.log("Registeration Completed!")
+        console.log("Application Sent!")
         //Validation Pass
         User.findOne({
             email: email
@@ -202,7 +202,6 @@ exports.postJoinUs = (req, res, next) => {
                     acceptedTherapist: 'No',
                     gender
                 })
-                console.log()
                 //Hashing The Password
                 bcrypt.genSalt(10, (err, salt) => 
                     bcrypt.hash(newUser.password, salt, (err, hash) => {
@@ -254,7 +253,6 @@ exports.getEditAccount = (req, res, next) => {
 }
 exports.postEditAccount = (req, res, next) => {
     const { name, email, gender } = req.body
-
     const image = req.file
     let errors = []
 
@@ -264,7 +262,6 @@ exports.postEditAccount = (req, res, next) => {
     }
 
         if(errors.length > 0) {
-            console.log(errors)
             User.findOne({email : req.user.email})
                 .then(user => {
                     res.render('user-profile-edit', {

@@ -18,7 +18,8 @@ exports.getDashboard = (req, res, next) => {
     User.findOne({email : req.user.email})
         .then(user => {
             res.render('dashboard', {
-                user: user, 
+                user: user,
+                sessions: user.bookings,
                 pageTitle: 'Dashboard', 
                 path: '/dashboard',
                 pageName: 'dashboard',
@@ -68,6 +69,40 @@ exports.getTherapists = (req, res, next) => {
             return next(error);
         })
 }
+
+// Get Therapist Account
+exports.getTherapist = (req, res, next) => {
+    const therapistId = req.params.therapistId;
+    User.findById(therapistId)
+            .then(therapist => {
+                res.render('therapistAccount', {
+                    therapist: therapist,
+                    availableDates: therapist.availableDates,
+                    user: req.user,
+                    pageTitle: therapist.name, 
+                    path: '/therapists',
+                    pageName: 'therapist list'
+            })
+        })
+        .catch(err => {
+            console.log(err);
+            const error = new Error(err);
+            error.httpStatusCode = 500;
+            return next(error);
+        })
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 exports.getAccount = (req,res,next) => {
