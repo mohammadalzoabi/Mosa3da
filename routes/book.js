@@ -1,7 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const isLoggedIn = require('../config/auth2');
-const isNotLoggedIn = require('../config/auth')
+const isNotLoggedIn = require('../config/isNotLoggedIn')
 
 const bookController = require('../controllers/booking');
 

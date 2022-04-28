@@ -1,9 +1,10 @@
 const express = require('express')
 const router = express.Router()
 const isLoggedIn = require('../config/auth2');
-const isNotLoggedIn = require('../config/auth')
+const isNotLoggedIn = require('../config/isNotLoggedIn')
 
 const authController = require('../controllers/auth');
+const cvUpload = require('../middleware/cvUpload')
 const upload = require('../middleware/imageUpload')
 
 
@@ -21,7 +22,7 @@ router.post('/signup', authController.postSignup)
 
 //Therapist Join Us Form
 router.get('/join-us', isLoggedIn, authController.getJoinUs)
-router.post('/join-us', isLoggedIn, authController.postJoinUs)
+router.post('/join-us', cvUpload.single("cv"), isLoggedIn, authController.postJoinUs)
 
 
 

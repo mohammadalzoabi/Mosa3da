@@ -1,4 +1,5 @@
 const User = require('../models/User');
+const fileSystem = require('fs')
 
 const ITEMS_PER_PAGE = 9;
 
@@ -37,6 +38,25 @@ exports.getApplications = (req, res, next) => {
             return next(error);
         })
 }
+
+exports.getApplication = (req, res, next) => {
+    const id = req.params.therapistId;
+  
+    User.findById(id).then((user) => {
+        console.log(user)
+      let filePath = user.cv.filePath
+      let stat = fileSystem.statSync(filePath);
+  
+      res.writeHead(200, {
+        "Content-Type": "application/pdf",
+        "Content-Length": stat.size,
+      });
+  
+      let readStream = fileSystem.createReadStream(filePath);
+      // We replaced all the event handlers with a simple call to readStream.pipe()
+      readStream.pipe(res);
+    });
+  };
 
 exports.postAcceptApplication = (req, res, next) => {
     const therapistEmail = req.body.userEmail;

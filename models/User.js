@@ -20,6 +20,11 @@ const UserSchema = new Schema({
         required: false,
         default: 'https://i.imgur.com/fUWz80K.jpg'
     },
+    cv: {
+        fileName: { type: String, required: false },
+        filePath: { type: String, required: false },
+        fileType: { type: String, required: false },
+    },
     gender: {
         type: String,
         required: true

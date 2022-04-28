@@ -15,7 +15,7 @@ exports.getLogin = (req, res, next) => {
     }
     res.render('login', {
         path:'/login',
-        pageTitle: 'Signup',
+        pageTitle: 'Sign in',
         pageName:'login',
         errorMessage: message,
         oldInput: {
@@ -32,13 +32,15 @@ exports.postLogin = (req, res, next) => {
     User.findOne({email: email})
         .then(user => {
             if(!user) {
-                req.flash('error', 'Invalid Email.')
-                return res.redirect('/login');
-            }
+                errors.push({msg: 'Invalid Email.'})
+                res.render('login', {
+                    errors, email, pageTitle: 'Sign in'
+                });
+            } else
             if(user.role === 'therapist' && user.acceptedTherapist === 'No') {
                 errors.push({msg: 'Your application is under review.'})
                 res.render('login', {
-                    errors, email, pageTitle: 'Login'
+                    errors, email, pageTitle: 'Sign in'
                 })
             } else {
                 passport.authenticate('local', {
@@ -169,8 +171,20 @@ exports.getJoinUs = (req, res, next) => {
     });
 }
 exports.postJoinUs = (req, res, next) => {
-    const { name, email, gender } = req.body
     let errors = []
+
+    const { name, email, gender } = req.body
+    console.log(req.file)
+
+    let cv
+    if(req.file) {
+        cv = {fileName: req.file.originalname, filePath: req.file.path, fileType: req.file.mimetype}
+        if(cv.fileType !== 'application/pdf') {
+            errors.push({msg: 'CV must be in PDF format'})
+        }
+    } else {
+        errors.push({msg: 'Please make sure to upload your CV, must be in PDF Format'})
+    }
 
     //Check Required Fields
     if(!name || !email || !gender) {
@@ -182,7 +196,6 @@ exports.postJoinUs = (req, res, next) => {
             errors, name, email, gender, pageTitle: 'Join Us', pageName: 'join-u'
         })
     } else {
-        console.log("Application Sent!")
         //Validation Pass
         User.findOne({
             email: email
@@ -194,12 +207,14 @@ exports.postJoinUs = (req, res, next) => {
                     errors, name, email, gender, pageTitle: 'Join Us'
                 })
             } else {
+                console.log("Application Sent!")
                 const newUser = new User({
                     name,
                     email,
                     password: email + Date.now(),
                     role: 'therapist',
                     acceptedTherapist: 'No',
+                    cv,
                     gender
                 })
                 //Hashing The Password
