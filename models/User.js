@@ -90,7 +90,37 @@ const UserSchema = new Schema({
                     required: true
                 }
         }]
-    }
+    },
+
+
+
+    therapists: {
+            therapist: [{
+                therapistId: {
+                    type: Schema.Types.ObjectId,
+                    ref:'User',
+                    required: true
+                },
+                therapistName: {
+                    type: String,
+                    required: true
+                }
+            }]
+    },
+
+    patients: {
+        patient: [{
+            patientId: {
+                type: Schema.Types.ObjectId,
+                ref:'User',
+                required: true
+            },
+            patientName: {
+                type: String,
+                required: true
+            }
+        }]
+}
 
 
 
@@ -109,6 +139,16 @@ UserSchema.methods.bookTherapist = function(therapist, date, duration) {
     const updatedSold = {booking: sold};
     therapist.bookings = updatedSold
 
+
+
+    const therapistName = [...this.therapists.therapist]
+    therapistName.push({therapistId: therapist._id, therapistName: therapist.name})
+    const updatedTherapist = {therapist: therapistName}
+    this.therapists = updatedTherapist
+    const patientName = [...therapist.patients.patient]
+    patientName.push({patientId: this._id, patientName: this.name})
+    const updatedPatient = {patient: patientName}
+    therapist.patients = updatedPatient
     return therapist.save(), this.save();
 
 }

@@ -1,0 +1,44 @@
+<%- include('./includes/head.ejs') %>
+    <link rel="stylesheet" type="text/css" href="/css/main.css">
+    <link rel="stylesheet" type="text/css" href="/css/chat.css">
+</head>
+
+<body>
+    <%- include('./includes/navbar.ejs') %>
+    <main style="margin-top: 100px">
+
+    <div class="chat-container" style="height: 1000px;">
+      <header class="chat-header" style="text-align: center;">
+        <h2 id="otherSideName">Mosa3da Messages</h2>
+        <a href="/" class="btn">Leave Room</a>
+      </header>
+      <main class="chat-main" style="height: 500px;">
+        <div class="chat-sidebar" style="background-color: #79B4B7;">
+          <h3><i class="fas fa-users"></i> Users</h3>
+          <ul id="users">
+          </ul>
+        </div>
+        <div class="chat-messages">
+        </div>
+      </main>
+      <div class="chat-form-container">
+        <form id="chat-form">
+          <input style=" border-radius:10px;"
+            id="msg"
+            type="text"
+            placeholder="Enter Message"
+            required
+            autocomplete="off"
+          />
+          <button class="btn"><i class="fas fa-paper-plane"></i> Send</button>
+        </form>
+      </div>
+    </div>
+</main>
+  
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.10.3/qs.js" integrity="sha512-Qv1OSKmVsG3Y4WAKqvlcL/KllfceErp2+ZfNsQtox5nZtQKL86CVfbjmak7A+ka3jo7BwvFXa47vHEBs8QKq7Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/js/main.js"></script>
+  </body>
+  </html>

@@ -4,10 +4,17 @@ const mongoose = require('mongoose')
 const flash = require('connect-flash')
 const session = require('express-session')
 const passport = require('passport')
-const path = require('path');
+const path = require('path')
+const http = require('http')
+const socketio = require('socket.io')
+const formatMessage = require('./util/messages')
+const {userJoin, getCurrentUser, userLeave, getRoomUsers} = require('./util/users')
+
+
 
 const app = express()
-
+const server = http.createServer(app)
+const io = socketio(server)
 
 //Passport Config
 require('./config/passport')(passport)
@@ -49,6 +56,7 @@ app.use(passport.session())
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use('/cvs', express.static(path.join(__dirname, './cvs')));
+app.use(express.static(path.join(__dirname, 'views')));
 
 
 //Connect Flash
@@ -73,5 +81,48 @@ app.use('/', require('./routes/book'))
 app.use('/', require('./routes/admin'))
 
 
+
+io.on('connection', socket => {
+    socket.on('joinRoom', ({patient, room}) => {
+        const user = userJoin(socket.id, patient, room)
+        
+        socket.join(user.room)
+
+        // Welcome User
+        socket.emit('message', formatMessage('Mosa3da Bot', 'Welcome to Mosa3da Messages!'))
+
+        // Broadcast when a User connects
+        socket.broadcast.to(user.room).emit('message', formatMessage('Mosa3da Bot', `${user.username} Joined!`))
+
+        //Room and Users info
+        io.to(user.room).emit('roomUsers', {
+            room: user.room,
+            users: getRoomUsers(user.room)
+        })
+    })
+
+
+
+    socket.on('chatMessage', msg => {
+        const user = getCurrentUser(socket.id);
+        io.to(user.room).emit('message', formatMessage(`${user.username}` ,msg ))
+    })
+
+    socket.on('disconnect', () => {
+        const user = userLeave(socket.id)
+
+        if(user){
+            io.to(user.room).emit('message', formatMessage('Mosa3da Bot', `${user.username} Left!`))
+
+            //Room and Users info
+            io.to(user.room).emit('roomUsers', {
+                room: user.room,
+                users: getRoomUsers(user.room)
+            })
+        }
+    })
+})
+
+
 const PORT = process.env.PORT || 5000
-app.listen(PORT, console.log('Connected!'))
+server.listen(PORT, console.log('Connected!'))

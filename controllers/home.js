@@ -98,7 +98,24 @@ exports.getTherapist = (req, res, next) => {
 
 
 
+exports.getMessages = (req, res, next) => {
+    res.render('messages', {
+        pageTitle: "therapist.name", 
+        path: '/messages',
+        pageName: 'messages',
+        user: req.user,
+        therapistCount: req.user.therapists.therapist.length,
+})
+}
 
+exports.getChat = (req, res, next) => {
+    res.render('chat', {
+        pageTitle: "therapist.name", 
+        path: '/messages',
+        pageName: 'messages',
+        user: req.user
+})
+}
 
 
 

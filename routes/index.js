@@ -20,6 +20,9 @@ router.get('/therapists', siteController.getTherapists)
 router.get('/therapists/:therapistId', siteController.getTherapist)
 
 
+// Messages and Chat
+router.get('/messages', isNotLoggedIn, siteController.getMessages)
+router.get('/messages/:therapistId+:patientId', isNotLoggedIn, siteController.getChat)
 
 // User Account
 router.get('/account', isNotLoggedIn, siteController.getAccount)
