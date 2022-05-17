@@ -9,6 +9,8 @@ const http = require('http')
 const socketio = require('socket.io')
 const formatMessage = require('./util/messages')
 const {userJoin, getCurrentUser, userLeave, getRoomUsers} = require('./util/users')
+const moment = require('moment')
+const MessagesSchema = require('./models/Messages')
 
 
 
@@ -85,8 +87,19 @@ app.use('/', require('./routes/admin'))
 io.on('connection', socket => {
     socket.on('joinRoom', ({patient, room}) => {
         const user = userJoin(socket.id, patient, room)
-        
         socket.join(user.room)
+
+        // Load old Messages
+        MessagesSchema.findOne({roomId: room})
+            .then(room1 => {
+                if(room1) {
+                    if(room1.messages.message.length > 0) {
+                        for(let i = 0; i<room1.messages.message.length; i++) {
+                            socket.emit('message', {username: room1.messages.message[i].sender, text:room1.messages.message[i].message, time:room1.messages.message[i].time})
+                        }
+                    }
+                }
+            })
 
         // Welcome User
         socket.emit('message', formatMessage('Mosa3da Bot', 'Welcome to Mosa3da Messages!'))
@@ -99,13 +112,52 @@ io.on('connection', socket => {
             room: user.room,
             users: getRoomUsers(user.room)
         })
+
+        //Typing Status
+        socket.on("typing", (name) => {
+            socket.broadcast.to(user.room).emit("typing", name)
+        })
     })
 
 
 
     socket.on('chatMessage', msg => {
         const user = getCurrentUser(socket.id);
+
         io.to(user.room).emit('message', formatMessage(`${user.username}` ,msg ))
+
+        // Create new Room in database if it doesn't exist
+        MessagesSchema.findOne({roomId: user.room})
+            .then(room1 => {
+                if(!room1) {
+                    const newRoom = new MessagesSchema({
+                        roomId: user.room
+                    })
+                    const newMessage = [...newRoom.messages.message]
+                    newMessage.push({sender: user.username, message: msg, time: moment().format('h:mm a')})
+                    const updatedMessage = {message: newMessage};
+                    newRoom.messages = updatedMessage
+
+                    newRoom
+                        .save()
+                        .then(result => {
+                            console.log("Room Created.");
+                        })
+                    
+                    
+                } else if(room1) {
+                    const newMessage = [...room1.messages.message]
+                    newMessage.push({sender: user.username, message: msg, time: moment().format('h:mm a')})
+                    const updatedMessage = {message: newMessage};
+                    room1.messages = updatedMessage
+
+                    room1
+                        .save()
+                        .then(result => {
+                            console.log("Room Created.");
+                        })
+                }
+            })
     })
 
     socket.on('disconnect', () => {

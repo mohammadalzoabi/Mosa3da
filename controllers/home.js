@@ -1,4 +1,3 @@
-const express = require('express')
 const User = require('../models/User')
 
 const ITEMS_PER_PAGE = 9;
@@ -100,7 +99,7 @@ exports.getTherapist = (req, res, next) => {
 
 exports.getMessages = (req, res, next) => {
     res.render('messages', {
-        pageTitle: "therapist.name", 
+        pageTitle: "Messages", 
         path: '/messages',
         pageName: 'messages',
         user: req.user,
@@ -109,8 +108,9 @@ exports.getMessages = (req, res, next) => {
 }
 
 exports.getChat = (req, res, next) => {
+    
     res.render('chat', {
-        pageTitle: "therapist.name", 
+        pageTitle: "Chat", 
         path: '/messages',
         pageName: 'messages',
         user: req.user

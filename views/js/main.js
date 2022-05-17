@@ -2,6 +2,9 @@ const chatForm = document.getElementById('chat-form')
 const chatMessages = document.querySelector('.chat-messages')
 const userList = document.getElementById('users')
 const otherSideName = document.getElementById('otherSideName')
+const message = document.getElementById('msg')
+const feedback = document.getElementById('feedback')
+
 
 // Get Usernames
 const {patient, therapist, room} = Qs.parse(location.search, {
@@ -29,7 +32,16 @@ socket.on('message', message => {
     chatMessages.scrollTop = chatMessages.scrollHeight;
 })
 
-
+//Message Typing Status
+message.addEventListener('keypress', () => {
+    socket.emit("typing", patient)
+})
+socket.on("typing", (name) => {
+    feedback.innerHTML = `<p>(Typing...)</p>`;
+    setTimeout(() => {
+        feedback.innerHTML = ""
+    }, 3000)
+})
 
 // Message Submit
 chatForm.addEventListener('submit', (e) => {
@@ -62,8 +74,12 @@ function outputMessage(message) {
     <p class="text">
         ${message.text}
     </p>`;
+    message.innerHTML = ""
+
+    saveMessages(message, patient, therapist, room);
 
     document.querySelector('.chat-messages').appendChild(div)
+
 }
 
 // Adds Users to dom
@@ -72,4 +88,8 @@ function outputUsers(users, therapist) {
     ${users.map(user => `<li>${user.username}</li>`).join('')}`;
 
     otherSideName.innerText = therapist 
+}
+
+
+function saveMessages(message, patient, therapist, room) {
 }

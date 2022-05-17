@@ -18,7 +18,7 @@ const UserSchema = new Schema({
     image: {
         type: String,
         required: false,
-        default: 'https://i.imgur.com/fUWz80K.jpg'
+        default: 'default-dp'.jpg
     },
     cv: {
         fileName: { type: String, required: false },
@@ -141,15 +141,41 @@ UserSchema.methods.bookTherapist = function(therapist, date, duration) {
 
 
 
-    const therapistName = [...this.therapists.therapist]
-    therapistName.push({therapistId: therapist._id, therapistName: therapist.name})
-    const updatedTherapist = {therapist: therapistName}
-    this.therapists = updatedTherapist
-    const patientName = [...therapist.patients.patient]
-    patientName.push({patientId: this._id, patientName: this.name})
-    const updatedPatient = {patient: patientName}
-    therapist.patients = updatedPatient
-    return therapist.save(), this.save();
+    if(this.therapists.therapist.length > 0)
+    {
+        console.log('more than 0')
+        for(let i = 0; i<this.therapists.therapist.length; i++)
+        {
+            console.log(this.therapists.therapist[i].therapistId)
+            console.log(therapist._id);
+            if(this.therapists.therapist[i].therapistId.toString() === therapist._id.toString())
+            {
+                console.log('Already Booked')
+                return therapist.save(), this.save();
+            } else {
+                const therapistName = [...this.therapists.therapist]
+                therapistName.push({therapistId: therapist._id, therapistName: therapist.name})
+                const updatedTherapist = {therapist: therapistName}
+                this.therapists = updatedTherapist
+                const patientName = [...therapist.patients.patient]
+                patientName.push({patientId: this._id, patientName: this.name})
+                const updatedPatient = {patient: patientName}
+                therapist.patients = updatedPatient
+                return therapist.save(), this.save();
+            }
+        }
+        
+    } else {
+        const therapistName = [...this.therapists.therapist]
+        therapistName.push({therapistId: therapist._id, therapistName: therapist.name})
+        const updatedTherapist = {therapist: therapistName}
+        this.therapists = updatedTherapist
+        const patientName = [...therapist.patients.patient]
+        patientName.push({patientId: this._id, patientName: this.name})
+        const updatedPatient = {patient: patientName}
+        therapist.patients = updatedPatient
+        return therapist.save(), this.save();
+    }
 
 }
 
