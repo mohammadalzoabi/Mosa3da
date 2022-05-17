@@ -10,6 +10,8 @@ const socketio = require('socket.io')
 const formatMessage = require('./util/messages')
 const {userJoin, getCurrentUser, userLeave, getRoomUsers} = require('./util/users')
 
+const jwt = require('jsonwebtoken')
+
 
 
 const app = express()
@@ -36,6 +38,7 @@ app.set('views', 'views');
 
 
 //BodyParser
+app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 
 
