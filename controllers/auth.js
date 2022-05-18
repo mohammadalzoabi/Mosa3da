@@ -1,19 +1,12 @@
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const passport = require("passport");
+const jwt = require("jsonwebtoken");
 
 const fileHelper = require("../util/file");
 
-const jwt = require("jsonwebtoken");
-const jwt_secret = "some super secret";
 
-exports.test = (req, res, next) => {
-  res.json({
-    status: "Failed",
-    message: "Test Failed",
-  });
-  //res.send("hello")
-};
+const jwt_secret = "some super secret";
 
 // Login Exports
 exports.getLogin = (req, res, next) => {
@@ -216,6 +209,7 @@ exports.postResetPassword = (req, res, next) => {
       console.log(err);
     });
 };
+
 //Change-Password
 exports.getChangePassword = (req, res, next) => {
   const { id } = req.user;
@@ -329,6 +323,7 @@ exports.postChangePassword = (req, res, next) => {
       console.log(err);
     });
 };
+
 // Sign up Exports
 exports.getSignup = (req, res, next) => {
   let message = req.flash("error");
