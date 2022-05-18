@@ -25,12 +25,6 @@ exports.addSession = (req, res, next) => {
                     return next(error);
                   });
 }
-
-
-
-
-
-
 exports.bookTherapist = (req, res, next) => {
     const therapistEmail = req.body.userEmail;
     const date = req.body.date;
@@ -38,6 +32,7 @@ exports.bookTherapist = (req, res, next) => {
     const sessionId = req.body.sessionId;
     User.findOne({email: therapistEmail})
                     .then(therapist => { 
+                        console.log(req.user);
                         req.user.bookTherapist(therapist, date, duration);
                         //therapist.availableDates.availableDate.createIndex({"Time": 1}, {expireAfterSeconds: 0})
                         return therapist.availableDates.availableDate.pull({_id: sessionId})

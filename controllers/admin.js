@@ -43,7 +43,7 @@ exports.getApplication = (req, res, next) => {
     const id = req.params.therapistId;
   
     User.findById(id).then((user) => {
-        console.log(user)
+        console.log("User CV viewed: ", user)
       let filePath = user.cv.filePath
       let stat = fileSystem.statSync(filePath);
   
@@ -53,7 +53,7 @@ exports.getApplication = (req, res, next) => {
       });
   
       let readStream = fileSystem.createReadStream(filePath);
-      // We replaced all the event handlers with a simple call to readStream.pipe()
+      
       readStream.pipe(res);
     });
   };

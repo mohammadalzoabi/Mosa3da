@@ -12,6 +12,8 @@ const {userJoin, getCurrentUser, userLeave, getRoomUsers} = require('./util/user
 const moment = require('moment')
 const MessagesSchema = require('./models/Messages')
 
+const jwt = require('jsonwebtoken')
+
 
 
 const app = express()
@@ -38,6 +40,7 @@ app.set('views', 'views');
 
 
 //BodyParser
+app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 
 
