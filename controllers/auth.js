@@ -77,18 +77,20 @@ exports.postForgotPassword = (req, res, next) => {
   User.findOne({ email: email })
     .then((user) => {
       if (!user) {
-        return res.status(404).send("User not registered");
+        req.flash("err_msg", "Email not found");
+        res.redirect('/forgot-password')
+      } else {
+        const secret = jwt_secret + user.password;
+        const payload = {
+          email: user.email,
+          id: user._id.toString(),
+        };
+        const token = jwt.sign(payload, secret, { expiresIn: "15m" });
+        const link = `http://localhost:5000/reset-password/${user._id}/${token}`;
+        console.log(link);
+        req.flash("success_msg", "Password Link Has Been Sent to Your Email");
+        res.redirect('/login')
       }
-
-      const secret = jwt_secret + user.password;
-      const payload = {
-        email: user.email,
-        id: user._id.toString(),
-      };
-      const token = jwt.sign(payload, secret, { expiresIn: "15m" });
-      const link = `http://localhost:5000/reset-password/${user._id}/${token}`;
-      console.log(link);
-      res.send("<h1>Password reset link has been sent to your email.</h1>");
     })
     .catch((err) => {
       console.log(err);
@@ -106,8 +108,6 @@ exports.getResetPassword = (req, res, next) => {
       }
       const secret = jwt_secret + user.password;
       try {
-        const payload = jwt.verify(token, secret);
-
         res.render("reset-password", {
           email: user.email,
           path: "/reset-password",
@@ -116,7 +116,7 @@ exports.getResetPassword = (req, res, next) => {
         });
       } catch (error) {
         console.log(error.message);
-        res.send(`<h1>${error.message}</h1>`);
+        res.send(error.message);
       }
     })
     .catch((err) => {
@@ -152,21 +152,10 @@ exports.postResetPassword = (req, res, next) => {
         bcrypt.compare(password, hashedPassword, function (err, result) {
           if (result) {
             errors.push({
-              msg: "Password must not be the same as old password",
+              msg: "Password can not be the same as the old one",
             });
           }
         });
-        //   .then((result) => {
-        //     if (result) {
-        //       //passwords match
-        //       errors.push({
-        //         msg: "Password must not be the same as old password",
-        //       });
-        //       console.log(errors);
-        //     }})
-        //   .catch((err) => {
-        //     console.log(err);
-        //   });
 
         setTimeout(() => {
           if (errors.length > 0) {
@@ -283,7 +272,6 @@ exports.postChangePassword = (req, res, next) => {
 
         setTimeout(() => {
           if (errors.length > 0) {
-            console.log(errors);
             res.render("change-password", {
               errors,
               user,
@@ -305,7 +293,7 @@ exports.postChangePassword = (req, res, next) => {
                   .save()
                   .then((newUser) => {
                     req.flash("success_msg", "Password Changed Successfully");
-                    res.redirect("/edit-account");
+                    res.redirect("/account");
                   })
                   .catch((err) => {
                     console.log(err);

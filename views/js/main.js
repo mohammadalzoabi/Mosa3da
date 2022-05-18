@@ -18,7 +18,7 @@ const socket = io()
 // Join Chatroom
 socket.emit('joinRoom', {patient, room})
 
-// Get Room and Other User Name
+//Get Room and Other User Name
 socket.on('roomUsers', ({room, users}) => {
     outputUsers(users, therapist);
 })
@@ -37,7 +37,7 @@ message.addEventListener('keypress', () => {
     socket.emit("typing", patient)
 })
 socket.on("typing", (name) => {
-    feedback.innerHTML = `<p>(Typing...)</p>`;
+    feedback.innerHTML = `<h4 style="text-align: left;" >(Typing...)</h4>`;
     setTimeout(() => {
         feedback.innerHTML = ""
     }, 3000)
@@ -76,20 +76,11 @@ function outputMessage(message) {
     </p>`;
     message.innerHTML = ""
 
-    saveMessages(message, patient, therapist, room);
-
     document.querySelector('.chat-messages').appendChild(div)
 
 }
 
-// Adds Users to dom
+//Adds Users to dom
 function outputUsers(users, therapist) {
-    userList.innerHTML = `
-    ${users.map(user => `<li>${user.username}</li>`).join('')}`;
-
     otherSideName.innerText = therapist 
-}
-
-
-function saveMessages(message, patient, therapist, room) {
 }

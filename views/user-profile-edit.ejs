@@ -5,15 +5,14 @@
 <body>
     <%- include('./includes/navbar.ejs') %>
 
-    <div style="margin-top: 150px;">
-        <%- include("./partials/errorMessages.ejs") %>
-    </div>
-
-
     <form action="/edit-account" method="POST" enctype="multipart/form-data">
 
-    <div class="page-content page-container" id="page-content">
+    <div class="page-content page-container" id="page-content" style="margin-top: 75px">
         <div class="padding">
+          <div style="text-align: center;">
+            <%- include("./partials/errorMessages.ejs") %>
+        </div>
+        <h4 class="text-center" style="margin-bottom: 25px;">Editing Profile</h4>
             <div class="row container d-flex justify-content-center">
                 <div class="col-xl-12 col-md-12">
                     <div class="card user-card-full">
