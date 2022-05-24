@@ -32,8 +32,6 @@ exports.getDashboard = (req, res, next) => {
           });
 }
 
-
-
 // Get Therapists List
 exports.getTherapists = (req, res, next) => {
     const page = +req.query.page || 1
@@ -91,12 +89,6 @@ exports.getTherapist = (req, res, next) => {
         })
     }
 
-
-
-
-
-
-
 exports.getMessages = (req, res, next) => {
     res.render('messages', {
         pageTitle: "Messages", 
@@ -116,11 +108,6 @@ exports.getChat = (req, res, next) => {
         user: req.user
 })
 }
-
-
-
-
-
 
 exports.getAccount = (req,res,next) => {
 

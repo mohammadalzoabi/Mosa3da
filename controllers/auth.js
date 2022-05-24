@@ -5,7 +5,11 @@ const jwt = require("jsonwebtoken");
 
 const fileHelper = require("../util/file");
 
-
+const {
+  sendWelcomeEmail,
+  sendResetPasswordEmail,
+  sendJoinUsEmail,
+} = require("../emails/account");
 const jwt_secret = "some super secret";
 
 // Login Exports
@@ -78,7 +82,7 @@ exports.postForgotPassword = (req, res, next) => {
     .then((user) => {
       if (!user) {
         req.flash("err_msg", "Email not found");
-        res.redirect('/forgot-password')
+        res.redirect("/forgot-password");
       } else {
         const secret = jwt_secret + user.password;
         const payload = {
@@ -87,9 +91,9 @@ exports.postForgotPassword = (req, res, next) => {
         };
         const token = jwt.sign(payload, secret, { expiresIn: "15m" });
         const link = `http://localhost:5000/reset-password/${user._id}/${token}`;
-        console.log(link);
+        sendResetPasswordEmail(email, user.name, link);
         req.flash("success_msg", "Password Link Has Been Sent to Your Email");
-        res.redirect('/login')
+        res.redirect("/login");
       }
     })
     .catch((err) => {
@@ -261,10 +265,10 @@ exports.postChangePassword = (req, res, next) => {
           .compare(newPassword, hashedPassword)
           .then((result) => {
             if (result) {
-                errors.push({
-                  msg: "Password must not be the same as old password",
-                });
-              }
+              errors.push({
+                msg: "Password must not be the same as old password",
+              });
+            }
           })
           .catch((err) => {
             console.log(err);
@@ -393,6 +397,7 @@ exports.postSignup = (req, res, next) => {
             newUser
               .save()
               .then((user) => {
+                console.log(user);
                 req.flash("success_msg", "You Are Now Registered");
                 console.log("Registeration Completed!");
                 passport.authenticate("local", {
@@ -407,6 +412,7 @@ exports.postSignup = (req, res, next) => {
               });
           })
         );
+        sendWelcomeEmail(email, name);
       }
     });
   }
@@ -437,7 +443,6 @@ exports.postJoinUs = (req, res, next) => {
   let errors = [];
 
   const { name, email, gender } = req.body;
-  console.log(req.file);
 
   let cv;
   if (req.file) {
@@ -485,6 +490,7 @@ exports.postJoinUs = (req, res, next) => {
         });
       } else {
         console.log("Application Sent!");
+        sendJoinUsEmail(email, name);
         const newUser = new User({
           name,
           email,
@@ -504,6 +510,7 @@ exports.postJoinUs = (req, res, next) => {
             newUser
               .save()
               .then((user) => {
+                console.log(user.image);
                 req.flash("success_msg", "Thank you.");
                 res.redirect("/");
               })

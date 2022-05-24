@@ -77,7 +77,6 @@ const UserSchema = new Schema({
         }]
     },
 
-
     availableDates: {
             availableDate: [{
                 time: {
@@ -91,8 +90,6 @@ const UserSchema = new Schema({
                 }
         }]
     },
-
-
 
     therapists: {
             therapist: [{
@@ -121,9 +118,6 @@ const UserSchema = new Schema({
             }
         }]
 }
-
-
-
 
 })
 
@@ -178,9 +172,6 @@ UserSchema.methods.bookTherapist = function(therapist, date, duration) {
     }
 
 }
-
-
-
 
 UserSchema.methods.addSession = function(newDate, duration) {
 
