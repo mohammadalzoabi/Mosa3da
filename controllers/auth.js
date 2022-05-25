@@ -5,8 +5,20 @@ const jwt = require("jsonwebtoken");
 
 const fileHelper = require("../util/file");
 
+const {
+  sendWelcomeEmail,
+  sendResetPasswordEmail,
+  sendJoinUsEmail,
+} = require("../emails/account");
 
-const jwt_secret = "some super secret";
+
+// exports.getTest = (req, res) => {
+//   res.render('home', {
+//     pageName: 'home',
+//     path: '/',
+//     pageTitle: 'Mosa3da',
+// })
+// }
 
 // Login Exports
 exports.getLogin = (req, res, next) => {
@@ -78,9 +90,9 @@ exports.postForgotPassword = (req, res, next) => {
     .then((user) => {
       if (!user) {
         req.flash("err_msg", "Email not found");
-        res.redirect('/forgot-password')
+        res.redirect("/forgot-password");
       } else {
-        const secret = jwt_secret + user.password;
+        const secret = process.env.JWT_SECRET + user.password;
         const payload = {
           email: user.email,
           id: user._id.toString(),
@@ -88,8 +100,9 @@ exports.postForgotPassword = (req, res, next) => {
         const token = jwt.sign(payload, secret, { expiresIn: "15m" });
         const link = `http://localhost:5000/reset-password/${user._id}/${token}`;
         console.log(link);
+        sendResetPasswordEmail(email, user.name, link);
         req.flash("success_msg", "Password Link Has Been Sent to Your Email");
-        res.redirect('/login')
+        res.redirect("/login");
       }
     })
     .catch((err) => {
@@ -106,7 +119,7 @@ exports.getResetPassword = (req, res, next) => {
       if (!user) {
         return res.status(404).send("Invalid ID.");
       }
-      const secret = jwt_secret + user.password;
+      const secret = process.env.JWT_SECRET + user.password;
       try {
         res.render("reset-password", {
           email: user.email,
@@ -132,7 +145,7 @@ exports.postResetPassword = (req, res, next) => {
       if (!user) {
         return res.status(404).send("Invalid ID.");
       }
-      const secret = jwt_secret + user.password;
+      const secret = process.env.JWT_SECRET + user.password;
       try {
         const payload = jwt.verify(token, secret);
         const { email, id } = payload;
@@ -261,10 +274,10 @@ exports.postChangePassword = (req, res, next) => {
           .compare(newPassword, hashedPassword)
           .then((result) => {
             if (result) {
-                errors.push({
-                  msg: "Password must not be the same as old password",
-                });
-              }
+              errors.push({
+                msg: "Password must not be the same as old password",
+              });
+            }
           })
           .catch((err) => {
             console.log(err);
@@ -407,6 +420,7 @@ exports.postSignup = (req, res, next) => {
               });
           })
         );
+        sendWelcomeEmail(email, name);
       }
     });
   }
@@ -437,7 +451,6 @@ exports.postJoinUs = (req, res, next) => {
   let errors = [];
 
   const { name, email, gender } = req.body;
-  console.log(req.file);
 
   let cv;
   if (req.file) {
@@ -485,6 +498,7 @@ exports.postJoinUs = (req, res, next) => {
         });
       } else {
         console.log("Application Sent!");
+        sendJoinUsEmail(email, name);
         const newUser = new User({
           name,
           email,

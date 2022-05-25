@@ -16,7 +16,12 @@
             <div class="profile-card" style="margin-left: 30px; margin-right: 30px; margin-bottom: 60px;">
                 <div class="img-area">
                     <div class="inner-area">
-                        <img src="<%= singleUser.image %>" alt="" />
+                        <% if(singleUser.image == "https://i.imgur.com/fUWz80K.jpg") { %>
+                            <img src="<%= singleUser.image %>" alt="" />
+                        <% } else { %>
+                            <img src="/<%= singleUser.image %>" alt="" />
+                        <% } %>
+                        
                     </div>
                 </div>
 

@@ -1,45 +1,44 @@
     .logo-image {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    overflow: hidden;
-  }
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        overflow: hidden;
+    }
+
     * {
         margin: 0;
         padding: 0;
     }
+
     .imgbox {
         display: grid;
         height: 100%;
     }
+
     .center-fit {
         max-width: 100%;
         max-height: 100%;
         margin: auto;
     }
+
     .pagination {
-    text-align: center;
-    margin-top: 2rem;
+        text-align: center;
+        margin-top: 2rem;
 
     }
 
     .pagination a {
-    text-decoration: none;
-    color: black;
-    padding: 0.5rem;
-    border: 2px solid blanchedalmond;
-    margin: 0 1rem;
+        text-decoration: none;
+        color: black;
+        padding: 0.5rem;
+        border: 2px solid blanchedalmond;
+        margin: 0 1rem;
     }
 
     .pagination a:hover,
     .pagination a:active,
     .pagination a.active {
-    background: blanchedalmond;
-    color: black;
-    border: 2px solid black;
+        background: blanchedalmond;
+        color: black;
+        border: 2px solid black;
     }
-
-    
-
-
-

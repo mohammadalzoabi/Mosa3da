@@ -8,7 +8,7 @@ const fileStorage = multer.diskStorage({
     },
     filename: (req, file, cb) => {
         let ext = path.extname(file.originalname)
-        cb(null, Date.now() + '-' + ext);
+        cb(null, req.body.name + '_CV' + ext);
     }
 });
 const fileFilter = (req, file, cb) => {

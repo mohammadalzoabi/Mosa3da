@@ -18,7 +18,11 @@
                         <div class="row m-l-0 m-r-0">
                             <div class="col-sm-4 user-profile" style="background-color: #79B4B7;">
                                 <div class="card-block text-center text-white">
-                                    <div class="m-b-25"> <img src="<%= user.image %>" class="img-radius" alt="User-Profile-Image" style="max-width: 50%; max-height: 50%;"> </div>
+                                    <% if(user.image == "https://i.imgur.com/fUWz80K.jpg") { %>
+                                        <div class="m-b-25"> <img src="<%= user.image %>" class="img-radius" alt="User-Profile-Image" style="max-width: 50%; max-height: 50%;"> </div>
+                                    <% } else { %>
+                                        <div class="m-b-25"> <img src="/<%= user.image %>" class="img-radius" alt="User-Profile-Image" style="max-width: 50%; max-height: 50%;"> </div>
+                                    <% } %>
                                     <h5 class="f-w-600"><%= user.name %></h5>
                                 </div>
                             </div>

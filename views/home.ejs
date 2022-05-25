@@ -1,17 +1,55 @@
 <%- include('./includes/head.ejs') %>
     <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/homepage.css">
+    <link rel="stylesheet" href="/css/footer.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
 </head>
-<body style="background-color: #FEFBF3;">
+<body>
   <%- include('./includes/navbar.ejs') %>
 
-      <div style=" margin-top: 40px">
-        <div class="container" style="display: flex; justify-content: center;; gap: 20px;">
-            
-          <div class="card" style="width: 200px; height: 200px; background-color: aqua;">Card</div>
-          <img src="http://placekitten.com/g/500/300" alt="banner" />
-        </div>
-        
+    <!-- <div class="container-fluid"> -->
+
+      <!-- Nav Bar -->
+
+      
+
+      <!-- Title -->
+
+      <div class="page-content page-container" style="display: contents;">
+
+          <div class="flex-fill">
+            <div class="main-card">
+              <div class="inner-card">
+                
+                <img src="/images/logo-icon.png" alt="logo" class="logo-img inner-card-element">
+               
+                <h2 class="inner-card-element">Your Inner Peace Is a Click Away.</h2>              
+               
+                <button class="btn btn-primary btn-block get-started-btn inner-card-element" style="background-color: #79B4B7; border-color: #79B4B7;">
+                  <a href="/signup" style="text-decoration: none; color: white;">Get Started</a>
+                </button>    
+  
+                <p class="inner-card-p">Click Get Started to sign up and start your healing journey.</p>
+                
+              </div>
+            </div>
+          </div>
       </div>
+
+      
+    <!-- </div> -->
+    <div class="footer-basic" style="margin-top: 10px;">
+      <footer style="overflow: hidden;">
+          <div class="social"><a href="#"><i class="fab fa-instagram"></i></a><a href="#"><i class="fab fa-twitter"></i></a><a href="#"><i class="fab fa-facebook-f"></i></a></div>
+          <ul class="list-inline">
+              <li class="list-inline-item"><a href="#">Home</a></li>
+              <li class="list-inline-item"><a href="/therapists">Therapist List</a></li>
+              <li class="list-inline-item"><a href="#">About Us</a></li>
+          </ul>
+          <p class="copyright">Mosa3da © 2022</p>
+      </footer>
+  </div>
+      
 
       
 </body>
