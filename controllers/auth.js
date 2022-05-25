@@ -10,7 +10,15 @@ const {
   sendResetPasswordEmail,
   sendJoinUsEmail,
 } = require("../emails/account");
-const jwt_secret = "some super secret";
+
+
+// exports.getTest = (req, res) => {
+//   res.render('home', {
+//     pageName: 'home',
+//     path: '/',
+//     pageTitle: 'Mosa3da',
+// })
+// }
 
 // Login Exports
 exports.getLogin = (req, res, next) => {
@@ -84,7 +92,7 @@ exports.postForgotPassword = (req, res, next) => {
         req.flash("err_msg", "Email not found");
         res.redirect("/forgot-password");
       } else {
-        const secret = jwt_secret + user.password;
+        const secret = process.env.JWT_SECRET + user.password;
         const payload = {
           email: user.email,
           id: user._id.toString(),
@@ -110,7 +118,7 @@ exports.getResetPassword = (req, res, next) => {
       if (!user) {
         return res.status(404).send("Invalid ID.");
       }
-      const secret = jwt_secret + user.password;
+      const secret = process.env.JWT_SECRET + user.password;
       try {
         res.render("reset-password", {
           email: user.email,
@@ -136,7 +144,7 @@ exports.postResetPassword = (req, res, next) => {
       if (!user) {
         return res.status(404).send("Invalid ID.");
       }
-      const secret = jwt_secret + user.password;
+      const secret = process.env.JWT_SECRET + user.password;
       try {
         const payload = jwt.verify(token, secret);
         const { email, id } = payload;
@@ -397,7 +405,6 @@ exports.postSignup = (req, res, next) => {
             newUser
               .save()
               .then((user) => {
-                console.log(user);
                 req.flash("success_msg", "You Are Now Registered");
                 console.log("Registeration Completed!");
                 passport.authenticate("local", {
@@ -510,7 +517,6 @@ exports.postJoinUs = (req, res, next) => {
             newUser
               .save()
               .then((user) => {
-                console.log(user.image);
                 req.flash("success_msg", "Thank you.");
                 res.redirect("/");
               })

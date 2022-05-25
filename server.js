@@ -26,8 +26,7 @@ require('./config/passport')(passport)
 
 
 //DB Config
-const db = require('./config/keys').MongoURI;
-mongoose.connect(db, { useNewUrlParser: true })
+mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true })
     .then(() => console.log('MongoDB Connected!'))
     .catch(err =>  console.log(err));
 
@@ -179,5 +178,5 @@ io.on('connection', socket => {
 })
 
 
-const PORT = process.env.PORT || 5000
+const PORT = process.env.PORT
 server.listen(PORT, console.log('Connected!'))
