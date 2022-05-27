@@ -11,7 +11,6 @@ exports.getIndex = (req, res, next) => {
     })
 }
 
-
 // Get Dashboard
 exports.getDashboard = (req, res, next) => {
     User.findOne({email : req.user.email})
@@ -87,8 +86,9 @@ exports.getTherapist = (req, res, next) => {
             error.httpStatusCode = 500;
             return next(error);
         })
-    }
+}
 
+// Get List of Chats
 exports.getMessages = (req, res, next) => {
     res.render('messages', {
         pageTitle: "Messages", 
@@ -99,16 +99,40 @@ exports.getMessages = (req, res, next) => {
 })
 }
 
+// Get Chatting Screen
 exports.getChat = (req, res, next) => {
     
-    res.render('chat', {
-        pageTitle: "Chat", 
-        path: '/messages',
-        pageName: 'messages',
-        user: req.user
-})
+    roomId = req.params.chatId
+    if(roomId.includes(req.user._id)) {
+        res.render('chat', {
+            pageTitle: "Chat", 
+            path: '/messages',
+            pageName: 'messages',
+            user: req.user
+        })
+    } else {
+        res.redirect('/')
+    }
 }
 
+// Get Video Call Screen
+exports.getVideo = (req, res, next) => {
+
+    roomId = req.params.roomId
+    if(roomId.includes(req.user._id)) {
+        res.render('room', {
+            pageTitle: "Video Call", 
+            path: '/video',
+            pageName: 'video',
+            user: req.user,
+            roomId: roomId
+        })
+    } else {
+        res.redirect('/')
+    }
+}
+
+// Get Personal Account
 exports.getAccount = (req,res,next) => {
 
     User.findOne({email : req.user.email})

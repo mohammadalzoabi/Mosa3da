@@ -12,15 +12,7 @@ const {
 } = require("../emails/account");
 
 
-// exports.getTest = (req, res) => {
-//   res.render('home', {
-//     pageName: 'home',
-//     path: '/',
-//     pageTitle: 'Mosa3da',
-// })
-// }
-
-// Login Exports
+// Get Login Page
 exports.getLogin = (req, res, next) => {
   let message = req.flash("error");
   if (message.length > 0) {
@@ -40,6 +32,8 @@ exports.getLogin = (req, res, next) => {
     validationErrors: [],
   });
 };
+
+// Authorize User
 exports.postLogin = (req, res, next) => {
   const email = req.body.email;
   let errors = [];
@@ -75,7 +69,7 @@ exports.postLogin = (req, res, next) => {
     });
 };
 
-//Forgot-password
+// Get Forgot Passowrd Page
 exports.getForgotPassword = (req, res, next) => {
   res.render("forgot-password", {
     path: "/forgot-password",
@@ -83,6 +77,8 @@ exports.getForgotPassword = (req, res, next) => {
     pageName: "Forgot Password",
   });
 };
+
+// Send Reset Password Link
 exports.postForgotPassword = (req, res, next) => {
   const { email } = req.body;
 
@@ -110,7 +106,7 @@ exports.postForgotPassword = (req, res, next) => {
     });
 };
 
-//Reset-password
+// Get Reset Passowrd Page
 exports.getResetPassword = (req, res, next) => {
   const { id, token } = req.params;
 
@@ -136,6 +132,8 @@ exports.getResetPassword = (req, res, next) => {
       console.log(err);
     });
 };
+
+// Save New Password
 exports.postResetPassword = (req, res, next) => {
   const { id, token } = req.params;
   const { password, confirmPassword } = req.body;
@@ -212,7 +210,7 @@ exports.postResetPassword = (req, res, next) => {
     });
 };
 
-//Change-Password
+// Get Change Passowrd Page
 exports.getChangePassword = (req, res, next) => {
   const { id } = req.user;
 
@@ -234,6 +232,8 @@ exports.getChangePassword = (req, res, next) => {
       console.log(err);
     });
 };
+
+// Set New Password
 exports.postChangePassword = (req, res, next) => {
   const { id } = req.params;
   const { oldPassword, newPassword, confirmPassword } = req.body;
@@ -325,7 +325,7 @@ exports.postChangePassword = (req, res, next) => {
     });
 };
 
-// Sign up Exports
+// Get Sign Up Page
 exports.getSignup = (req, res, next) => {
   let message = req.flash("error");
   if (message.length > 0) {
@@ -348,6 +348,8 @@ exports.getSignup = (req, res, next) => {
     validationErrors: [],
   });
 };
+
+// Authorize Sign Up
 exports.postSignup = (req, res, next) => {
   const { name, email, password, confirmPassword, gender } = req.body;
   let errors = [];
@@ -420,13 +422,13 @@ exports.postSignup = (req, res, next) => {
               });
           })
         );
-        sendWelcomeEmail(email, name);
+        //sendWelcomeEmail(email, name);
       }
     });
   }
 };
 
-// Join us Exports
+// Get Join Us Page
 exports.getJoinUs = (req, res, next) => {
   let message = req.flash("error");
   if (message.length > 0) {
@@ -447,6 +449,8 @@ exports.getJoinUs = (req, res, next) => {
     validationErrors: [],
   });
 };
+
+// Submit Application
 exports.postJoinUs = (req, res, next) => {
   let errors = [];
 
@@ -531,14 +535,14 @@ exports.postJoinUs = (req, res, next) => {
   }
 };
 
-// Logout Export
+// Logout
 exports.getLogout = (req, res, next) => {
   req.logout();
   req.flash("success_msg", "Logged out successfully");
   res.redirect("/");
 };
 
-// Edit Account Exports
+// Get Edit Account
 exports.getEditAccount = (req, res, next) => {
   User.findOne({ email: req.user.email })
     .then((user) => {
@@ -556,6 +560,8 @@ exports.getEditAccount = (req, res, next) => {
       return next(error);
     });
 };
+
+// Save Account Changes
 exports.postEditAccount = (req, res, next) => {
   const { name, email, gender } = req.body;
   const image = req.file;

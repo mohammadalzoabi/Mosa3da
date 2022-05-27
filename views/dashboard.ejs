@@ -1,14 +1,61 @@
 <%- include('./includes/head.ejs') %>
     <link rel="stylesheet" type="text/css" href="/css/main.css">
+    <link rel="stylesheet" type="text/css" href="/css/footer.css">
+
 </head>
 
 <body style="background-color: #FEFBF3;">
 
   <%- include('./includes/navbar.ejs') %>
   <main style="margin-top: 100px;">
-    <% if(sessions.booking.length > 0) { %>
 
-      <% for (let session of sessions.booking) { %>
+    <% if(user.role === 'customer') { %>
+      <% if(sessions.booking.length > 0) { %>
+
+        <% for (let session of sessions.booking) { %>
+          <div class="container">
+            <div class="row" >
+              <div class="col-lg-12">
+                <div class="card border-0 mb-4 mt-4" style="background-color: #F8F0DF; border-radius:10px; box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.26);">
+                  <div class="d-flex";>
+                      <div class="flex-fill">
+                        <div class="card-body">
+                          <div class="font-weight-bold">Date: <%= moment(session.dateAndTime).utc().format('YYYY-MM-DD HH:mm A') %> </div>
+                          <div class="font-weight-bold">Time: <%= moment(session.dateAndTime).utc().format('HH:mm A') %> </div>
+                          <div class="mb-3">Duration: <%= session.duration %></div>
+                          <div class="" id="therapistName">Therapist: <%= session.therapistName %></div>
+                        </div>
+                      </div>
+                      <div class="d-flex justify-content-center align-items-center">
+                        <form action="/video/<%=session.bookingId%><%=user._id%>" method="GET">
+                          <% if(moment().utc().format('YYYY-MM-DD') === moment(session.dateAndTime).utc().format('YYYY-MM-DD')) { %>
+                          <button class="btn btn-primary" style="background-color: #79B4B7; border-color: #79B4B7; border-radius: 50px; font-size: 1em; padding-right: 1cm; padding-left: 1cm; margin-right: 10px;">Join</button>
+                          <input type="hidden" name="vchat" id="vchat" value="vchat">
+                          <input type="hidden" name="room" id="room" value="<%=session.bookingId%>+<%=user._id %>">
+                          <input type="hidden" name="therapist" id="therapist" value="<%= session.bookingId %>">
+                          <input type="hidden" name="patient" id="patient" value="<%= user._id %>">
+                          <% } else { %>
+                          <button disabled class="btn btn-primary" style="background-color: #79B4B7; border-color: #79B4B7; border-radius: 50px; font-size: 1em; padding-right: 1cm; padding-left: 1cm; margin-right: 10px;">Join</button>
+                          <% }%>
+                        </form>
+                      </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% } %>
+      <% } else { %>
+        <h1> No Sessions.</h1>
+      <% } %>
+
+    <% } %>
+
+
+    <% if(user.role === 'therapist') { %>
+      <% if(sessions.booking.length > 0) { %>
+
+        <% for (let session of sessions.booking) { %>
           <div class="container">
             <div class="row" >
               <div class="col-lg-12">
@@ -18,25 +65,45 @@
                         <div class="card-body">
                           <div class="font-weight-bold">Date: <%= moment(session.dateAndTime).utc().format('YYYY-MM-DD HH:mm A') %> </div>
                           <div class="mb-3">Duration: <%= session.duration %></div>
-                          <% if(user.role === 'customer') { %>
-                          <div class="" id="therapistName">Therapist: <%= session.therapistName %></div>
-                          <% } else if(user.role === 'therapist') { %>
-                          <div class="" id="therapistName">Patient: <%= session.customerName %></div>
-                          <% } %>
+                          <div class="" id="customerName">Patient: <%= session.customerName %></div>
                         </div>
                       </div>
                       <div class="d-flex justify-content-center align-items-center">
-                        <button class="btn btn-primary" style="background-color: #79B4B7; border-color: #79B4B7; border-radius: 50px; font-size: 1em; padding-right: 1cm; padding-left: 1cm; margin-right: 10px;">Join</button>
+                        <% if(moment().utc().format('YYYY-MM-DD') === moment(session.dateAndTime).utc().format('YYYY-MM-DD')) { %>
+                        <form action="/video/<%=user._id%><%=session.bookingId%>" method="GET">
+                          <button class="btn btn-primary" style="background-color: #79B4B7; border-color: #79B4B7; border-radius: 50px; font-size: 1em; padding-right: 1cm; padding-left: 1cm; margin-right: 10px;">Join</button>
+                          <input type="hidden" name="vchat" id="vchat" value="vchat">
+                          <input type="hidden" name="room" id="room" value="<%=user._id%>+<%=session.bookingId%>">
+                          <input type="hidden" name="therapist" id="therapist" value="<%= session.bookingId %>">
+                          <input type="hidden" name="patient" id="patient" value="<%= user._id %>">
+                          <% } else { %>
+                          <button disabled class="btn btn-primary" style="background-color: #79B4B7; border-color: #79B4B7; border-radius: 50px; font-size: 1em; padding-right: 1cm; padding-left: 1cm; margin-right: 10px;">Join</button>
+                          <% }%>
+                      </form>
                       </div>
                   </div>
                 </div>
               </div>
             </div>
-    </div>
-    <% } %>
-    <% } else { %>
-      <h1> No Sessions.</h1>
+          </div>
+        <% } %>
+      <% } else { %>
+        <h1> No Sessions.</h1>
       <% } %>
+
+    <% } %>
+
+    <div class="footer-basic" style="margin-top: 10px;">
+      <footer style="overflow: hidden;">
+          <div class="social"><a href="#"><i class="fab fa-instagram"></i></a><a href="#"><i class="fab fa-twitter"></i></a><a href="#"><i class="fab fa-facebook-f"></i></a></div>
+          <ul class="list-inline">
+              <li class="list-inline-item"><a href="#">Home</a></li>
+              <li class="list-inline-item"><a href="#">Therapist List</a></li>
+              <li class="list-inline-item"><a href="#">About Us</a></li>
+          </ul>
+          <p class="copyright">Mosa3da © 2022</p>
+      </footer>
+  </div>
   </main>
   
   

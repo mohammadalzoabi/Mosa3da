@@ -6,6 +6,8 @@ const {
 } = require("../emails/account");
 const ITEMS_PER_PAGE = 9;
 
+
+// Get Applications Page
 exports.getApplications = (req, res, next) => {
   const page = +req.query.page || 1;
   let totalApplications;
@@ -41,6 +43,7 @@ exports.getApplications = (req, res, next) => {
     });
 };
 
+// View CV
 exports.getApplication = (req, res, next) => {
   const id = req.params.therapistId;
 
@@ -60,6 +63,7 @@ exports.getApplication = (req, res, next) => {
   });
 };
 
+// Accept Application
 exports.postAcceptApplication = (req, res, next) => {
   const therapistEmail = req.body.userEmail;
 
@@ -79,6 +83,7 @@ exports.postAcceptApplication = (req, res, next) => {
     });
 };
 
+// Decline Application
 exports.postDeclineApplication = (req, res, next) => {
   const therapistEmail = req.body.userEmail;
 

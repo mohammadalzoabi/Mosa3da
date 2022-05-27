@@ -22,11 +22,14 @@ router.get('/therapists/:therapistId', siteController.getTherapist)
 
 // Messages and Chat
 router.get('/messages', isNotLoggedIn, siteController.getMessages)
-router.get('/messages/:therapistId+:patientId', isNotLoggedIn, siteController.getChat)
+router.get('/messages/:chatId', isNotLoggedIn, siteController.getChat)
+
+
+// Video Call
+router.get('/video/:roomId', isNotLoggedIn, siteController.getVideo)
 
 // User Account
 router.get('/account', isNotLoggedIn, siteController.getAccount)
-
 
 
 module.exports = router

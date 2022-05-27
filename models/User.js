@@ -38,13 +38,20 @@ const UserSchema = new Schema({
         type: Date,
         default: Date.now
     },
+
     role: {
         type: String,
         default: "customer"
     },
+
     acceptedTherapist: {
         type: String,
         default: "No"
+    },
+
+    expertise: {
+        type: String,
+        required: false
     },
 
     bookings:{

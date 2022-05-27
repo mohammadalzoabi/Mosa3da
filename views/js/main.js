@@ -74,6 +74,9 @@ function outputMessage(message) {
     <p class="text">
         ${message.text}
     </p>`;
+    if(message.username == patient) {
+        div.style.backgroundColor = "#DFDFDE"
+    }
     message.innerHTML = ""
 
     document.querySelector('.chat-messages').appendChild(div)

@@ -24,7 +24,7 @@
                             </div>
                           </div>
                           <div class="d-flex justify-content-center align-items-center">
-                            <form action="/messages/<%=therapist.therapistId%>+<%=user._id%>" method="GET">
+                            <form action="/messages/<%=therapist.therapistId%><%=user._id%>" method="GET">
                                 <button class="btn btn-primary" style="background-color: #79B4B7; border-color: #79B4B7; border-radius: 50px; font-size: 1em; padding-right: 1cm; padding-left: 1cm; margin-right: 10px;">Chat</button>
                                 <input type="hidden" name="msgs" id="msgs" value="messages">
                                 <input type="hidden" name="room" id="room" value="<%=therapist.therapistId%>+<%=user._id%>">
@@ -59,7 +59,7 @@
                                   </div>
                                 </div>
                                 <div class="d-flex justify-content-center align-items-center">
-                                  <form action="/messages/<%=user._id%>+<%=patient._id%>" method="GET">
+                                  <form action="/messages/<%=user._id%><%=patient.patientId%>" method="GET">
                                     <button class="btn btn-primary" style="background-color: #79B4B7; border-color: #79B4B7; border-radius: 50px; font-size: 1em; padding-right: 1cm; padding-left: 1cm; margin-right: 10px;">Chat</button>
                                     <input type="hidden" name="msgs" id="msgs" value="messages">
                                     <input type="hidden" name="room" id="room" value="<%=user._id%>+<%=patient.patientId%>">

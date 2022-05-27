@@ -12,7 +12,7 @@ const {userJoin, getCurrentUser, userLeave, getRoomUsers} = require('./util/user
 const moment = require('moment')
 const MessagesSchema = require('./models/Messages')
 
-const jwt = require('jsonwebtoken')
+const errorController = require('./controllers/error');
 
 
 
@@ -84,6 +84,8 @@ app.use('/', require('./routes/users'))
 app.use('/', require('./routes/book'))
 app.use('/', require('./routes/admin'))
 
+app.use(errorController.get404);
+
 
 
 io.on('connection', socket => {
@@ -120,8 +122,6 @@ io.on('connection', socket => {
             socket.broadcast.to(user.room).emit("typing", name)
         })
     })
-
-
 
     socket.on('chatMessage', msg => {
         const user = getCurrentUser(socket.id);
@@ -174,6 +174,17 @@ io.on('connection', socket => {
                 users: getRoomUsers(user.room)
             })
         }
+    })
+
+
+
+    socket.on('join-room', (roomId, userId) => {
+        socket.join(roomId)
+        socket.broadcast.to(roomId).emit('user-connected', userId)
+
+        socket.on('disconnect', () => {
+            socket.broadcast.to(roomId).emit('user-disconnected', userId)
+        })
     })
 })
 

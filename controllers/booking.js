@@ -7,7 +7,7 @@ const {
   } = require("../emails/account");
 
 
-
+// Add New Available Session for Therapist
 exports.addSession = (req, res, next) => {
     var newDate = new Date()
     newDate = req.body.sessionTime;
@@ -28,6 +28,8 @@ exports.addSession = (req, res, next) => {
                     return next(error);
                   });
 }
+
+// Book a Session
 exports.bookTherapist = (req, res, next) => {
     const therapistEmail = req.body.userEmail;
     let therapistName

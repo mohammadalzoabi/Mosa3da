@@ -61,17 +61,16 @@
 <% if(user.role === 'therapist') { %>
         
         <form action="/add-new-session", method="POST" style="margin-top: 75px;">
-            <h4 class="text-center" style="margin-bottom: 25px;">Add New Session</h4>
+            <h4 class="text-center" style="margin-bottom: 25px;">Add New Available Session</h4>
             <div class="text-center" style="max-width: 25%; text-align: center; margin: auto;">
                 <input type="datetime-local" placeholder="Select Time and Date" id="sessionTime" name="sessionTime" style="display: block;">
                 <select name="duration" class="form-select" style="margin-top: 10px;">
-                    <option selected>Session Duration (In Minutes)</option>
-                    <option id="duration" value="15 Minutes" name="duration">15</option>
-                    <option id="duration" value="30 Minutes" name="duration">30</option>
-                    <option id="duration" value="45 Minutes" name="duration">45</option>
-                    <option id="duration" value="60 Minutes" name="duration">60</option>
+                    <option selected id="duration" value="15 Minutes" name="duration">15 Minutes</option>
+                    <option id="duration" value="30 Minutes" name="duration">30 Minutes</option>
+                    <option id="duration" value="45 Minutes" name="duration">45 Minutes</option>
+                    <option id="duration" value="60 Minutes" name="duration">60 Minutes</option>
                   </select>
-            </div>
+            </div>  
             <div class="text-center" style="margin-top: 10px;">
                 <button type="submit" class="btn btn-primary btn-block" style="background-color: #79B4B7; border-color: #79B4B7; border-radius: 50px; font-size: 1em; padding-right: 1cm; padding-left: 1cm;">Add Available Session</button>
             </div>
@@ -88,7 +87,9 @@
         enableTime: true,
         dateFormat: "Y-m-d H:i",
         altInput: true,
-        altFormat: "F j, Y (h:S K)"
+        altFormat: "F j, Y (h:S K)",
+        minDate: "today",
+        maxDate: new Date().fp_incr(60)
     }
     flatpickr("input[type=datetime-local]", config)
 </script>
