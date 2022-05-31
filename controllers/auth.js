@@ -11,7 +11,6 @@ const {
   sendJoinUsEmail,
 } = require("../emails/account");
 
-
 // Get Login Page
 exports.getLogin = (req, res, next) => {
   let message = req.flash("error");
@@ -95,7 +94,7 @@ exports.postForgotPassword = (req, res, next) => {
         };
         const token = jwt.sign(payload, secret, { expiresIn: "15m" });
         const link = `http://localhost:5000/reset-password/${user._id}/${token}`;
-        console.log(link);
+
         sendResetPasswordEmail(email, user.name, link);
         req.flash("success_msg", "Password Link Has Been Sent to Your Email");
         res.redirect("/login");
@@ -344,6 +343,7 @@ exports.getSignup = (req, res, next) => {
       password: "",
       confirmPassword: "",
       gender: "",
+      phoneNumber: "",
     },
     validationErrors: [],
   });
@@ -351,11 +351,20 @@ exports.getSignup = (req, res, next) => {
 
 // Authorize Sign Up
 exports.postSignup = (req, res, next) => {
-  const { name, email, password, confirmPassword, gender } = req.body;
+  const { name, email, countryCode, password, confirmPassword, gender } =
+    req.body;
+  var { phoneNumber } = req.body;
   let errors = [];
 
   //Check Required Fields
-  if (!name || !email || !password || !confirmPassword || !gender) {
+  if (
+    !name ||
+    !email ||
+    !password ||
+    !confirmPassword ||
+    !gender ||
+    !phoneNumber
+  ) {
     errors.push({ msg: "Please fill the required info" });
   }
   //Check Matching Password
@@ -371,6 +380,8 @@ exports.postSignup = (req, res, next) => {
       errors,
       name,
       email,
+      countryCode,
+      phoneNumber,
       password,
       confirmPassword,
       pageTitle: "Signup",
@@ -387,14 +398,18 @@ exports.postSignup = (req, res, next) => {
           errors,
           name,
           email,
+          phoneNumber,
+          countryCode,
           password,
           confirmPassword,
           pageTitle: "Signup",
         });
       } else {
+        phoneNumber = "+" + countryCode + phoneNumber;
         const newUser = new User({
           name,
           email,
+          phoneNumber,
           password,
           gender,
         });
@@ -422,7 +437,7 @@ exports.postSignup = (req, res, next) => {
               });
           })
         );
-        //sendWelcomeEmail(email, name);
+        sendWelcomeEmail(email, name);
       }
     });
   }
@@ -454,7 +469,8 @@ exports.getJoinUs = (req, res, next) => {
 exports.postJoinUs = (req, res, next) => {
   let errors = [];
 
-  const { name, email, gender } = req.body;
+  const { name, email, gender, countryCode } = req.body;
+  var { phoneNumber } = req.body;
 
   let cv;
   if (req.file) {
@@ -473,7 +489,7 @@ exports.postJoinUs = (req, res, next) => {
   }
 
   //Check Required Fields
-  if (!name || !email || !gender) {
+  if (!name || !email || !gender || !phoneNumber) {
     errors.push({ msg: "Please fill the required info" });
   }
 
@@ -482,6 +498,8 @@ exports.postJoinUs = (req, res, next) => {
       errors,
       name,
       email,
+      countryCode,
+      phoneNumber,
       gender,
       pageTitle: "Join Us",
       pageName: "join-u",
@@ -497,16 +515,20 @@ exports.postJoinUs = (req, res, next) => {
           errors,
           name,
           email,
+          countryCode,
+          phoneNumber,
           gender,
           pageTitle: "Join Us",
         });
       } else {
+        phoneNumber = "+" + countryCode + phoneNumber;
         console.log("Application Sent!");
         sendJoinUsEmail(email, name);
         const newUser = new User({
           name,
           email,
           password: email + Date.now(),
+          phoneNumber,
           role: "therapist",
           acceptedTherapist: "No",
           cv,
