@@ -53,7 +53,7 @@ const UserSchema = new Schema({
         default: "No"
     },
 
-    expertise: {
+    specialties: {
         type: String,
         required: false
     },

@@ -3,38 +3,71 @@
     <link rel="stylesheet" type="text/css" href="/css/account.css">
     <link rel="stylesheet" type="text/css" href="/css/therapist-list.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-</head>
-<body>
-    <%- include('./includes/navbar.ejs') %>
+    </head>
+
+    <body>
+        <%- include('./includes/navbar.ejs') %>
 
 
-    <div class="page-content page-container" id="page-content" style="margin-top: 100px; ">
-        <div class="padding">
-            <div class="row container d-flex">
-                <div class="col-xl-12 col-md-12">
-                    <div class="card user-card-full">
-                        <div class="row m-l-0 m-r-0">
-                            <div class="col-sm-4 user-profile" style="background-color: #79B4B7;">
-                                <div class="card-block text-center text-white">
-                                    <% if(therapist.image == "https://i.imgur.com/fUWz80K.jpg") { %>
-                                        <div class="m-b-25"> <img src="<%= therapist.image %>" class="img-radius" alt="User-Profile-Image" style="max-width: 50%; max-height: 50%;"> </div>
-                                    <% } else { %>
-                                        <div class="m-b-25"> <img src="/<%= therapist.image %>" class="img-radius" alt="User-Profile-Image" style="max-width: 50%; max-height: 50%;"> </div>
-                                    <% } %>
-                                    <h5 class="f-w-600"><%= therapist.name %></h5>
-                                </div>
-                            </div>
-                            <div class="col-sm-8">
-                                <div class="card-block">
-                                    <h4 class="m-b-20 p-b-5 b-b-default f-w-600">Information</h4>
-                                    <div class="row">
-                                        <div class="col-sm-6">
-                                            <p class="m-b-10 f-w-600">Email</p>
-                                            <h5 class="text-muted f-w-400"><%= therapist.email %></h5>
+            <div class="page-content page-container" id="page-content" style="margin-top: 100px; ">
+                <div class="padding">
+                    <div class="row container d-flex">
+                        <div class="col-xl-12 col-md-12">
+                            <div class="card user-card-full">
+                                <div class="row m-l-0 m-r-0">
+                                    <div class="col-sm-4 user-profile" style="background-color: #79B4B7;">
+                                        <div class="card-block text-center text-white">
+                                            <% if(therapist.image=="https://i.imgur.com/fUWz80K.jpg" ) { %>
+                                                <div class="m-b-25"> <img src="<%= therapist.image %>"
+                                                        class="img-radius" alt="User-Profile-Image"
+                                                        style="max-width: 50%; max-height: 50%;"> </div>
+                                                <% } else { %>
+                                                    <div class="m-b-25"> <img src="/<%= therapist.image %>"
+                                                            class="img-radius" alt="User-Profile-Image"
+                                                            style="max-width: 50%; max-height: 50%;"> </div>
+                                                    <% } %>
+                                                        <h5 class="f-w-600">
+                                                            <%= therapist.name %>
+                                                        </h5>
                                         </div>
-                                        <div class="col-sm-6">
-                                            <p class="m-b-10 f-w-600">Gender</p>
-                                            <h5 class="text-muted f-w-400"><%= therapist.gender %></h5>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <div class="card-block">
+                                            <h4 class="m-b-20 p-b-5 b-b-default f-w-600">Information</h4>
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <p class="m-b-10 f-w-600">Email</p>
+                                                        <h5 class="text-muted f-w-400">
+                                                            <%= therapist.email %>
+                                                        </h5>
+                                                    </div>
+
+                                                    <% if(user) { %>
+
+                                                        <% for(var i=0; i < therapist.patients.patient.length ; i++) {
+                                                            %>
+                                                            <% if(user._id.equals(therapist.patients.patient[i].patientId))
+                                                                { %>
+                                                                <hr>
+                                                                <div class="row">
+                                                                    <p class="f-w-600">Phone Number</p>
+                                                                    <h5 class="text-muted f-w-400">
+                                                                        <%= therapist.phoneNumber %>
+                                                                    </h5>
+                                                                </div>
+                                                                <% } %>
+                                                                    <% } %>
+
+                                                                        <% } %>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <p class="m-b-10 f-w-600">Gender</p>
+                                                    <h5 class="text-muted f-w-400">
+                                                        <%= therapist.gender %>
+                                                    </h5>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -43,41 +76,41 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
 
 
-    <% if (availableDates.availableDate.length > 0) { %>
-        <h4 class="text-center" style="margin-bottom: 25px;">Available Dates</h4>
-        <div style="display: flex; justify-content: center; align-items: stretch; flex-wrap: wrap;">
-        <% for (let date of availableDates.availableDate) { %>
-            <div class="profile-card" style="margin-left: 30px; margin-right: 30px; margin-bottom: 60px;">
+            <% if (availableDates.availableDate.length> 0) { %>
+                <h4 class="text-center" style="margin-bottom: 25px;">Available Dates</h4>
+                <div style="display: flex; justify-content: center; align-items: stretch; flex-wrap: wrap;">
+                    <% for (let date of availableDates.availableDate) { %>
+                        <div class="profile-card" style="margin-left: 30px; margin-right: 30px; margin-bottom: 60px;">
 
-                <div class="name" style="font-size: 18px;"> Date: <%= moment(date.time).utc().format('YYYY-MM-DD HH:mm A') %>
+                            <div class="name" style="font-size: 18px;"> Date: <%=
+                                    moment(date.time).utc().format('YYYY-MM-DD HH:mm A') %>
+                            </div>
+                            <div class="about">Duration: <%= date.duration %>
+                            </div>
+                            <p style="margin: 15px;"></p>
+                            <div class="buttons text-center" style="display: inline-block;">
+
+                                <form action="/book" method="POST">
+                                    <button type="submit" style="margin-bottom: 10px;">Book</button>
+                                    <input type="hidden" name="userEmail" value="<%= therapist.email %>">
+                                    <input type="hidden" name="date" value="<%= date.time %>">
+                                    <input type="hidden" name="duration" value="<%= date.duration %>">
+                                    <input type="hidden" name="sessionId" value="<%= date._id %>">
+                                </form>
+
+                            </div>
+
+                        </div>
+                        <% } %>
+                            <% } else { %>
+                                <h4 class="text-center" style="margin-bottom: 25px;">No Available Dates.</h4>
+                                <% } %>
                 </div>
-                <div class="about">Duration: <%= date.duration %>
-                </div>
-                    <p style="margin: 15px;"></p>
-                <div class="buttons text-center" style="display: inline-block;">
-
-                    <form action="/book" method="POST">
-                        <button type="submit" style="margin-bottom: 10px;">Book</button>
-                        <input type="hidden" name="userEmail" value="<%= therapist.email %>">
-                        <input type="hidden" name="date" value="<%= date.time %>">
-                        <input type="hidden" name="duration" value="<%= date.duration %>">
-                        <input type="hidden" name="sessionId" value="<%= date._id %>">
-                    </form>
-
-                </div>
-
-                </div>
-                <% } %>
-            <% } else { %>
-                <h4 class="text-center" style="margin-bottom: 25px;">No Available Dates.</h4>
-            <% } %>
-        </div>
 
 
 
-</body>
-</html>
+    </body>
+
+    </html>

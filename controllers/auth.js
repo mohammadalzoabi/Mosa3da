@@ -11,6 +11,13 @@ const {
   sendJoinUsEmail,
 } = require("../emails/account");
 
+exports.test = (req, res, next) => {
+  res.render("test", {
+    pageTitle: "test",
+    pageName: "test",
+  });
+};
+
 // Get Login Page
 exports.getLogin = (req, res, next) => {
   let message = req.flash("error");
@@ -201,7 +208,10 @@ exports.postResetPassword = (req, res, next) => {
         }, 500);
       } catch (error) {
         console.log(error.message);
-        res.send(error.message);
+        res.render('404',{
+          pageName: "Error",
+          pageTitle: "Error"
+        });
       }
     })
     .catch((err) => {
@@ -585,10 +595,25 @@ exports.getEditAccount = (req, res, next) => {
 
 // Save Account Changes
 exports.postEditAccount = (req, res, next) => {
-  const { name, email, gender } = req.body;
+  const { name, email, gender, specialties } = req.body;
   const image = req.file;
-  let errors = [];
+  var x;
 
+  if (typeof specialties === "object") {
+    x = specialties[0] + ", ";
+    for (let index = 1; index < specialties.length; index++) {
+      if (index == specialties.length - 1) {
+        x += specialties[index];
+        break;
+      }
+      x += specialties[index] + ", ";
+    }
+  } else if (typeof specialties === "string"){
+    x = specialties;
+  }
+  
+  let errors = [];
+  // console.log(specialties);
   //Check Required Fields
   if (!name || !email || !gender) {
     errors.push({ msg: "Cannot leave fields empty" });
@@ -617,6 +642,9 @@ exports.postEditAccount = (req, res, next) => {
         user.name = name;
         user.email = email;
         user.gender = gender;
+        if (specialties) {
+          user.specialties = x;
+        }
         if (image) {
           fileHelper.deleteFile(user.image);
           user.image = image.path;
