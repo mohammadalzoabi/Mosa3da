@@ -111,7 +111,7 @@ const sendJoinUsEmail = (email, name) => {
     });
 }
 
-const sendJoinUsApprovalEmail = (email, name) => {
+const sendJoinUsApprovalEmail = (email, name, link) => {
      sgMail
     .send({
       to: email,
@@ -130,11 +130,11 @@ const sendJoinUsApprovalEmail = (email, name) => {
            <h3>Hello ${name},</h3>
          
            <h4>
-               Congratulations! Your application to join Mosa3da has been Accepted. Our team has reviewed your application and we see you qualified.
+               Congratulations! Your application to join Mosa3da has been accepted. Our team has reviewed your application and we see you qualified.
                <br>
-               Please <a href="http://localhost:5000/forgot-password">reset your password</a> to be able to sign in to your account.
+               Please <a href="${link}">reset your password</a> to be able to sign in to your account.
            </h4>
-
+           
            Thank you,<br>
            <strong>Mosa3da Team</strong>
       </body>

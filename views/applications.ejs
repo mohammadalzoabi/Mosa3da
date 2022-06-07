@@ -1,50 +1,59 @@
 <%- include('./includes/head.ejs') %>
     <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="/css/therapist-List.css">
-</head>
+    </head>
 
 
-<body>
-    
-  <%- include('./includes/navbar.ejs') %>
+    <body>
 
-  <main style="margin-top: 100px;">
-    <% if (usersAll.length > 0) { %>
-        <div style="display: flex; justify-content: flex-start; align-items: stretch; flex-wrap: wrap;">
-        <% for (let singleUser of usersAll) { %>
-            <% if (singleUser.role ==='therapist') { %>
-            <div class="profile-card" style="margin-left: 30px; margin-right: 30px; margin-bottom: 60px;">
+        <%- include('./includes/navbar.ejs') %>
 
-                <div class="name"><%= singleUser.name %></div>
-                <div class="about"><%= singleUser.email %></div>
-                    <p style="margin: 15px;"></p>
-                <div class="buttons text-center" style="display: inline-block;">
+            <div class="container">
+                <main style="margin-top: 100px;">
+                    <% if (usersAll.length> 0) { %>
+                        <div style="display: flex; justify-content: flex-start; align-items: stretch; flex-wrap: wrap;">
+                            <% for (let singleUser of usersAll) { %>
+                                <% if (singleUser.role==='therapist' ) { %>
+                                    <div class="profile-card"
+                                        style="margin-left: 30px; margin-right: 30px; margin-bottom: 60px;">
 
-                    <form action="/application/<%=singleUser._id%>" method="GET" style="margin-bottom: 10px;">
-                        <button style="margin-bottom: 30px;">View CV</button>
-                        <input type="hidden" name="viewCV">
-                    </form>
+                                        <div class="name">
+                                            <%= singleUser.name %>
+                                        </div>
+                                        <div class="about">
+                                            <%= singleUser.email %>
+                                        </div>
+                                        <p style="margin: 15px;"></p>
+                                        <div class="buttons text-center" style="display: inline-block;">
 
-                    <form action="/accept-application" method="POST" style="margin-bottom: 10px;">
-                        <button type="submit" style="background-color: #C1E1C1;">Accept</button>
-                        <input type="hidden" name="userEmail" value="<%= singleUser.email %>">
-                    </form>
-                    
-                    <form action="/decline-application" method="POST">
-                        <button type="submit" style="background-color: #FF8986;">Decline</button>
-                        <input type="hidden" name="userEmail" value="<%= singleUser.email %>">
-                    </form>
+                                            <form action="/application/<%=singleUser._id%>" method="GET"
+                                                style="margin-bottom: 10px;">
+                                                <button style="margin-bottom: 30px;">View CV</button>
+                                                <input type="hidden" name="viewCV">
+                                            </form>
 
-                </div>
-                </div>
-                <% } %>
-            <% } %>
-            <% } %>
-        </div>
+                                            <form action="/accept-application" method="POST"
+                                                style="margin-bottom: 10px;">
+                                                <button type="submit" style="background-color: #C1E1C1;">Accept</button>
+                                                <input type="hidden" name="userEmail" value="<%= singleUser.email %>">
+                                            </form>
+
+                                            <form action="/decline-application" method="POST">
+                                                <button type="submit"
+                                                    style="background-color: #FF8986;">Decline</button>
+                                                <input type="hidden" name="userEmail" value="<%= singleUser.email %>">
+                                            </form>
+
+                                        </div>
+                                    </div>
+                                    <% } %>
+                                        <% } %>
+                                            <% } %>
+                        </div>
 
 
-      
-    <!-- <main style="margin-top: 100px; ">
+
+                        <!-- <main style="margin-top: 100px; ">
         <% if (usersAll.length > 0) { %>
             <div style="display: flex; justify-content: center; align-items: stretch; flex-wrap: wrap;">
                 <% for (let singleUser of usersAll) { %>
@@ -104,11 +113,12 @@
             <% } else { %>
                 <h1>No therapists Available.</h1>
             <% } %> -->
-    </main>
+                </main>
+            </div>
 
 
 
 
+    </body>
 
-</body>
-</html>
+    </html>

@@ -7,7 +7,7 @@ const authController = require("../controllers/auth");
 const cvUpload = require("../middleware/cvUpload");
 const upload = require("../middleware/imageUpload");
 
-// router.get('/test', authController.getTest)
+router.get('/test', authController.test)
 
 //Login
 router.get("/login", isLoggedIn, authController.getLogin);

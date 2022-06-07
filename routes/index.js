@@ -12,9 +12,6 @@ router.get('/', ifLoggedInDahsboard, siteController.getIndex)
 // Dashboard Page for Logged In Users
 router.get('/dashboard', isNotLoggedIn, siteController.getDashboard)
 
-
-
-
 // Therapists List and Singular Therapist
 router.get('/therapists', siteController.getTherapists)
 router.get('/therapists/:therapistId', siteController.getTherapist)

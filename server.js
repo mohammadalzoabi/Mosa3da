@@ -23,14 +23,10 @@ const io = socketio(server)
 //Passport Config
 require('./config/passport')(passport)
 
-
-
 //DB Config
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true })
     .then(() => console.log('MongoDB Connected!'))
     .catch(err =>  console.log(err));
-
-
 
 //EJS
 app.use(expressLayouts)

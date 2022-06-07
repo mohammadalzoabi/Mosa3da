@@ -15,6 +15,10 @@ const UserSchema = new Schema({
         type: String,
         required: true
     },
+    phoneNumber: {
+        type: String,
+        required: false
+    },
     image: {
         type: String,
         required: false,
@@ -49,7 +53,7 @@ const UserSchema = new Schema({
         default: "No"
     },
 
-    expertise: {
+    specialties: {
         type: String,
         required: false
     },

@@ -6,6 +6,7 @@
 <body>
     <%- include('./includes/navbar.ejs') %>
 
+    <div class="container">
     <main style="margin-top: 100px;">
         <% if(user.role === 'customer') { %>
         <% if(user.therapists.therapist.length > 0) { %>
@@ -82,6 +83,7 @@
           <h1> No Chats.</h1>
           <% } %>
       </main>
+    </div>
 
 </body>
 

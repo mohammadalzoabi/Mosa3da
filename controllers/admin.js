@@ -1,8 +1,9 @@
 const User = require("../models/User");
 const fileSystem = require("fs");
+const jwt = require("jsonwebtoken");
 const {
   sendJoinUsApprovalEmail,
-  sendJoinUsRejectionEmail,
+  sendJoinUsRejectionEmail
 } = require("../emails/account");
 const ITEMS_PER_PAGE = 9;
 
@@ -48,7 +49,6 @@ exports.getApplication = (req, res, next) => {
   const id = req.params.therapistId;
 
   User.findById(id).then((user) => {
-    console.log("User CV viewed: ", user);
     let filePath = user.cv.filePath;
     let stat = fileSystem.statSync(filePath);
 
@@ -71,8 +71,15 @@ exports.postAcceptApplication = (req, res, next) => {
     .then((therapist) => {
       therapist.acceptedTherapist = "Yes";
       return therapist.save().then((results) => {
+        const secret = process.env.JWT_SECRET + therapist.password;
+        const payload = {
+          email: therapistEmail,
+          id: therapist._id.toString(),
+        };
+        const token = jwt.sign(payload, secret, { expiresIn: "15m" });
+        const link = `http://localhost:5000/reset-password/${therapist._id}/${token}`;
         console.log("Accepted Therapist");
-        sendJoinUsApprovalEmail(therapist.email, therapist.name);
+        sendJoinUsApprovalEmail(therapist.email, therapist.name, link);
         res.redirect("/applications");
       });
     })

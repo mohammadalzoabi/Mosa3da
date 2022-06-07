@@ -1,12 +1,19 @@
+.homepage-footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+
+}
+
 .footer-basic {
     padding: 10px;
     background-color:#F8F0DF;
     color:#4b4c4d;
-    width: auto;
+    /* width: 100%;
     position: fixed;
     left: 0;
     right: 0;
-    bottom: 0;
+    bottom: 0; */
     
   }
   
