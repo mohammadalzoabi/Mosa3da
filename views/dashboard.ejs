@@ -29,7 +29,7 @@
                       </div>
                       <div class="d-flex justify-content-center align-items-center">
                         <form action="/video/<%=session.bookingId%><%=user._id%>" method="GET">
-                          <% if(moment().utc().format('YYYY-MM-DD') === moment(session.dateAndTime).utc().format('YYYY-MM-DD')) { %>
+                          <% if(moment().utc().format('YYYY-MM-DD HH') === moment(session.dateAndTime).utc().format('YYYY-MM-DD HH')) { %>
                           <button class="btn btn-primary" style="background-color: #79B4B7; border-color: #79B4B7; border-radius: 50px; font-size: 1em; padding-right: 1cm; padding-left: 1cm; margin-right: 10px;">Join</button>
                           <input type="hidden" name="vchat" id="vchat" value="vchat">
                           <input type="hidden" name="room" id="room" value="<%=session.bookingId%>+<%=user._id %>">

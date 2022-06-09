@@ -40,9 +40,9 @@
                 </div>
         </div>
         <% } %>
-        <% } %>
-
-
+        <% } else { %>
+          <h1> No Chats.</h1>
+          <% } %>
         <% } else if(user.role === 'therapist') {%>
             <% if(user.patients.patient.length > 0) { %>
     

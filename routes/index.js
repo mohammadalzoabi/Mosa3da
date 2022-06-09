@@ -25,6 +25,11 @@ router.get('/messages/:chatId', isNotLoggedIn, siteController.getChat)
 // Video Call
 router.get('/video/:roomId', isNotLoggedIn, siteController.getVideo)
 
+
+// Greoup Therapy
+router.get('/group-therapy', isNotLoggedIn, siteController.getGroupTherapy)
+router.get('/group-video/:roomId', isNotLoggedIn, siteController.getGroupTherapyVideo)
+
 // User Account
 router.get('/account', isNotLoggedIn, siteController.getAccount)
 

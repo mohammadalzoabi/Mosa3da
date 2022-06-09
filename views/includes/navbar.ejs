@@ -26,9 +26,9 @@
           <li class="nav-item">
             <a class="nav-link <%= pageName === 'therapist list' ? 'active' : '' %>" href="/therapists">Therapist List</a>
           </li>
-          <!-- <li class="nav-item">
-            <a class="nav-link <%= pageName === 'tests' ? 'active' : '' %>" href="/">Tests</a>
-          </li> -->
+          <li class="nav-item">
+            <a class="nav-link <%= pageName === 'group therapy' ? 'active' : '' %>" href="/group-therapy">Group Therapy</a>
+          </li>
         </ul>
         <% } else if (user.role === 'therapist') { %>
           <ul class="navbar-nav">
@@ -41,12 +41,19 @@
             <li class="nav-item">
               <a class="nav-link <%= pageName === 'tests' ? 'active' : '' %>" href="/">Patients</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link <%= pageName === 'group therapy' ? 'active' : '' %>" href="/group-therapy">Group Therapy</a>
+            </li>
           </ul>
           
           <% } else { %>
             <ul class="navbar-nav">
               <li class="nav-item">
                 <a class="nav-link <%= pageName === 'applications' ? 'active' : '' %>" href="/applications">Review Applications</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link <%= pageName === 'group therapy' ? 'active' : '' %>" href="/group-therapy">Group Therapy</a>
+              </li>
             </ul>
             
 
@@ -87,9 +94,6 @@
               <li class="nav-item">
                 <a class="nav-link" href="/login">Sign In</a>
               </li>
-          <li class="nav-item">
-            <a target="_blank" rel="noopener" class="nav-link" href="https://github.com/thomaspark/bootswatch/"><i class="fa fa-globe" aria-hidden="true"></i> العربية</a>
-          </li>
         </ul>
         <% }  %>
       </div>

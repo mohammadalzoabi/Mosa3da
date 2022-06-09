@@ -91,6 +91,7 @@
                             </div>
 
 
+                            <% if(user.role==='therapist' ) { %>
                             <div class="col-sm-6 text-center">
 
                               <p class="f-w-600">Specialties</p>
@@ -108,9 +109,11 @@
                                 <option value="Sexual disorders">Sexual disorders</option>
                                 <option value="Autistic Spectrum Disorders">Autistic Spectrum Disorders</option>
                                 <option value="Posttraumatic Stress Disorder">Posttraumatic Stress Disorder</option>
+                                <option value="Group Therapy">Group Therapy</option>
                               </select>
 
                             </div>
+                            <% }%>
                           </div>
                         </div>
                       </div>

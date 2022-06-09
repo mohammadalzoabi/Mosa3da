@@ -19,4 +19,9 @@ router.post('/accept-application', isNotLoggedIn, isNotAdmin, adminController.po
 router.post('/decline-application', isNotLoggedIn, isNotAdmin, adminController.postDeclineApplication)
 
 
+router.post('/add-group-therapy', isNotLoggedIn, isNotAdmin, adminController.postAddGroupTherapy)
+router.get('/add-group-therapy', isNotLoggedIn, isNotAdmin, adminController.getAddGroupTherapies)
+router.post('/delete-group-therapy', isNotLoggedIn, isNotAdmin, adminController.postDeleteGroupTherapies)
+
+
 module.exports = router

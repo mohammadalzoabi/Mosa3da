@@ -1,4 +1,5 @@
 const User = require('../models/User')
+const GroupTherapy = require('../models/GroupTherapy')
 
 const ITEMS_PER_PAGE = 9;
 
@@ -40,8 +41,8 @@ exports.getTherapists = (req, res, next) => {
         .then(numTherapists => {
             totalTherapists = numTherapists
             return User.find()
-                .skip((page-1) * ITEMS_PER_PAGE)
-                .limit(ITEMS_PER_PAGE)
+                // .skip((page-1) * ITEMS_PER_PAGE)
+                // .limit(ITEMS_PER_PAGE)
         })
         .then(users => {
             res.render('therapist-List', {
@@ -50,12 +51,12 @@ exports.getTherapists = (req, res, next) => {
                 usersAll: users,
                 pageTitle: 'Therapist List',
                 path:'/dashboard',
-                currentPage: page,
-                hasNextPage: ITEMS_PER_PAGE * page < totalTherapists,
-                hasPreviousPage: page > 1,
-                nextPage: page + 1,
-                previousPage: page - 1,
-                lastPage: Math.ceil(totalTherapists / ITEMS_PER_PAGE)
+                // currentPage: page,
+                // hasNextPage: ITEMS_PER_PAGE * page < totalTherapists,
+                // hasPreviousPage: page > 1,
+                // nextPage: page + 1,
+                // previousPage: page - 1,
+                // lastPage: Math.ceil(totalTherapists / ITEMS_PER_PAGE)
             })
         })
         .catch(err => {
@@ -130,6 +131,45 @@ exports.getVideo = (req, res, next) => {
     } else {
         res.redirect('/')
     }
+}
+
+// Get Group Therapy
+exports.getGroupTherapy = (req, res, next) => {
+    let totalGroupss
+
+    GroupTherapy.find().countDocuments()
+        .then(totalGroups => {
+            totalGroupss = totalGroups
+            return GroupTherapy.find()
+        })
+        .then(groups => {
+            res.render('group-therapy', {
+                user: req.user,
+                pageTitle: 'Group Therapy', 
+                path: '/group-therapy',
+                pageName: 'group therapy',
+                groups: groups
+            });
+        })
+        .catch(err => {
+            console.log(err);
+            const error = new Error(err);
+            error.httpStatusCode = 500;
+            return next(error);
+        })
+    
+}
+
+// Get Group Therapy Video Call
+exports.getGroupTherapyVideo = (req, res, next) => {
+    roomId = 'group-therapy'
+    res.render('room', {
+        pageTitle: "Video Call", 
+        path: '/group-video',
+        pageName: 'video',
+        user: req.user,
+        roomId: roomId
+    })
 }
 
 // Get Personal Account
