@@ -76,6 +76,7 @@ function outputMessage(message) {
     </p>`;
     if(message.username == patient) {
         div.style.backgroundColor = "#DFDFDE"
+        div.style.textAlign = 'right'
     }
     message.innerHTML = ""
 

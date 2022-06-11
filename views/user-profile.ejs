@@ -34,6 +34,7 @@
                                                             </h5>
                                             </div>
                                         </div>
+
                                         <div class="col-sm-8">
                                             <div class="card-block">
                                                 <h4 class="m-b-20 p-b-5 b-b-default f-w-600">Information</h4>
@@ -44,10 +45,23 @@
                                                             <%= user.email %>
                                                         </h5>
                                                     </div>
+
                                                     <div class="col-sm-6">
+                                                        <p class="m-b-10 f-w-600">Phone Number</p>
+                                                        <h5 class="text-muted f-w-400">
+                                                            <%= user.phoneNumber %>
+                                                        </h5>
+                                                    </div>
+                                                    <div class="col-sm-6" style="margin-top: 35px;">
                                                         <p class="m-b-10 f-w-600">Gender</p>
                                                         <h5 class="text-muted f-w-400">
                                                             <%= user.gender %>
+                                                        </h5>
+                                                    </div>
+                                                    <div class="col-sm-6" style="margin-top: 35px;">
+                                                        <p class="m-b-10 f-w-600">Member Since</p>
+                                                        <h5 class="text-muted f-w-400">
+                                                            <%= moment(user.joinDate).utc().format('YYYY-MM-DD') %>
                                                         </h5>
                                                     </div>
                                                 </div>
@@ -103,7 +117,6 @@
                             enableTime: true,
                             dateFormat: "Y-m-d H:i",
                             altInput: true,
-                            altFormat: "F j, Y (h:S K)",
                             minDate: "today",
                             maxDate: new Date().fp_incr(60)
                         }

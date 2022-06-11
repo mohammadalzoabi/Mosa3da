@@ -80,6 +80,7 @@ app.use('/', require('./routes/users'))
 app.use('/', require('./routes/book'))
 app.use('/', require('./routes/admin'))
 
+app.get('/500', errorController.get500);
 app.use(errorController.get404);
 
 

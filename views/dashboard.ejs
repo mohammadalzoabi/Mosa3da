@@ -21,8 +21,8 @@
                   <div class="d-flex";>
                       <div class="flex-fill">
                         <div class="card-body">
-                          <div class="font-weight-bold">Date: <%= moment(session.dateAndTime).utc().format('YYYY-MM-DD HH:mm A') %> </div>
-                          <div class="font-weight-bold">Time: <%= moment(session.dateAndTime).utc().format('HH:mm A') %> </div>
+                          <div class="font-weight-bold">Date: <%= moment(session.dateAndTime).format('YYYY-MM-DD') %> </div>
+                          <div class="font-weight-bold">Time: <%= moment(session.dateAndTime).format('HH:mm A') %> </div>
                           <div class="mb-3">Duration: <%= session.duration %></div>
                           <div class="" id="therapistName">Therapist: <%= session.therapistName %></div>
                         </div>

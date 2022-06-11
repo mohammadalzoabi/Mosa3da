@@ -63,7 +63,8 @@
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false"><%= user.name %></a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item text-center" href="/account">Account</a></li>
+              <li><a class="dropdown-item text-center" href="/account">Profile</a></li>
+              <li><a class="dropdown-item text-center" href="/change-password">Change Password</a></li>
               <%if (user.role === 'therapist') { %>
               <li><a class="dropdown-item text-center" href="/account">Add and View Session</a></li>
               <% } %>

@@ -38,7 +38,7 @@
                     <div class="d-flex justify-content-center align-items-center">
                       
                       <% if(user.role !== 'admin') { %>
-                      <% if(String(moment().day()) === group.roomDateInNumber) { %>
+                      <% if(String(moment().day()) === group.roomDateInNumber && String(moment().format('h')) === group.roomTime) { %>
                           <form action="/group-video/depressionandanxiety" method="GET">
                             <button class="btn btn-primary" style="background-color: #79B4B7; border-color: #79B4B7; border-radius: 50px; font-size: 1em; padding-right: 1cm; padding-left: 1cm; margin-right: 10px;">Join</button>
                             <% } else { %>
