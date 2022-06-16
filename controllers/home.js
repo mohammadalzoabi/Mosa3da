@@ -67,6 +67,50 @@ exports.getTherapists = (req, res, next) => {
         })
 }
 
+// Get Patients
+exports.getPatients = (req, res, next) => {
+    User.findOne({email : req.user.email})
+        .then(user => {
+            if(user.role === 'therapist') {
+                res.render('patients', {
+                    user: user,
+                    patients: user.patients,
+                    pageTitle: 'Patients', 
+                    path: '/patients',
+                    pageName: 'patients',
+                });
+            } else {
+                res.redirect('/dashboard')
+            }
+        })
+        .catch(err => {
+            console.log('didnt find user account!')
+            const error = new Error(err);
+            error.httpStatusCode = 500;
+            return next(error);
+          });
+}
+
+// Get User
+exports.getUser = (req, res, next) => {
+    const patientId = req.params.userId;
+    User.findById(patientId)
+            .then(user => {
+                res.render('patientAccount', {
+                    patient: user,
+                    user: req.user,
+                    pageTitle: user.name, 
+                    path: '/user',
+                    pageName: 'user account'
+            })
+        })
+        .catch(err => {
+            console.log(err);
+            const error = new Error(err);
+            error.httpStatusCode = 500;
+            return next(error);
+        })
+}
 // Get Therapist Account
 exports.getTherapist = (req, res, next) => {
     const therapistId = req.params.therapistId;

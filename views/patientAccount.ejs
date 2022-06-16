@@ -1,0 +1,76 @@
+<%- include('./includes/head.ejs') %>
+    <link rel="stylesheet" type="text/css" href="/css/main.css">
+    <link rel="stylesheet" type="text/css" href="/css/account.css">
+    <link rel="stylesheet" type="text/css" href="/css/therapist-list.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    </head>
+
+    <body>
+        <%- include('./includes/navbar.ejs') %>
+
+
+        <div class="container">
+            <div class="page-content page-container" id="page-content" style="margin-top: 100px; ">
+                <div class="padding">
+                    <div class="row container d-flex">
+                        <div class="col-xl-12 col-md-12">
+                            <div class="card user-card-full">
+                                <div class="row m-l-0 m-r-0">
+                                    <div class="col-sm-4 user-profile" style="background-color: #79B4B7;">
+                                        <div class="card-block text-center text-white">
+                                            <% if(patient.image=="https://i.imgur.com/fUWz80K.jpg" ) { %>
+                                                <div class="m-b-25"> <img src="<%= patient.image %>"
+                                                        class="img-radius" alt="User-Profile-Image"
+                                                        style="max-width: 50%; max-height: 50%;"> </div>
+                                                <% } else { %>
+                                                    <div class="m-b-25"> <img src="/<%= patient.image %>"
+                                                            class="img-radius" alt="User-Profile-Image"
+                                                            style="max-width: 50%; max-height: 50%;"> </div>
+                                                    <% } %>
+                                                        <h5 class="f-w-600">
+                                                            <%= patient.name %>
+                                                        </h5>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-8">
+                                        <div class="card-block">
+                                            <h4 class="m-b-20 p-b-5 b-b-default f-w-600">Information</h4>
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <p class="m-b-10 f-w-600">Email</p>
+                                                    <h5 class="text-muted f-w-400">
+                                                        <%= patient.email %>
+                                                    </h5>
+                                                </div>
+                                                
+                                               
+
+                                                <div class="col-sm-6"">
+                                                    <p class="m-b-10 f-w-600">Gender</p>
+                                                    <h5 class="text-muted f-w-400">
+                                                        <%= patient.gender %>
+                                                    </h5>
+                                                </div>
+                                                <div class="col-sm-6" style="margin-top: 35px;">
+                                                    <p class="m-b-10 f-w-600">Member Since</p>
+                                                    <h5 class="text-muted f-w-400">
+                                                        <%= moment(patient.joinDate).utc().format('YYYY-MM-DD') %>
+                                                    </h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </body>
+
+    </html>
