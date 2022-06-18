@@ -96,13 +96,18 @@ exports.getUser = (req, res, next) => {
     const patientId = req.params.userId;
     User.findById(patientId)
             .then(user => {
+                if(req.user.role === 'therapist') {
                 res.render('patientAccount', {
                     patient: user,
                     user: req.user,
+                    notes: req.user.notes.patientNotes,
                     pageTitle: user.name, 
                     path: '/user',
                     pageName: 'user account'
             })
+            } else {
+                res.redirect('/dashboard')
+            }
         })
         .catch(err => {
             console.log(err);
@@ -111,6 +116,29 @@ exports.getUser = (req, res, next) => {
             return next(error);
         })
 }
+
+// Add Note
+exports.addNote = (req, res, next) => {
+    const note = req.body;
+    const userId = req.params.userId;
+
+    User.findOne({ email: req.user.email })
+      .then((user) => {
+        if(req.user.role === 'therapist') {
+            req.user.addNote(note, userId, user);
+            res.redirect('/users/' + userId)
+        } else {
+            res.redirect('/dashboard')
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+            const error = new Error(err);
+            error.httpStatusCode = 500;
+            return next(error);
+      });
+  }
+
 // Get Therapist Account
 exports.getTherapist = (req, res, next) => {
     const therapistId = req.params.therapistId;

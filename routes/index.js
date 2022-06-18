@@ -19,6 +19,7 @@ router.get('/therapists/:therapistId', siteController.getTherapist)
 // Patients List and Singular User
 router.get('/patients', isNotLoggedIn, siteController.getPatients)
 router.get('/users/:userId', isNotLoggedIn, siteController.getUser)
+router.post('/addNote/:userId', isNotLoggedIn, siteController.addNote)
 
 // Messages and Chat
 router.get('/messages', isNotLoggedIn, siteController.getMessages)

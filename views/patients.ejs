@@ -1,8 +1,11 @@
 <%- include('./includes/head.ejs') %>
     <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="/css/therapist-List.css">
+    <link rel="stylesheet" href="/css/modal.css">
+    <link rel="stylesheet" type="text/css" href="/css/account.css">
 </head>
 
+<script src="/js/modal.js" defer></script>
 
 <body>
     
@@ -24,19 +27,20 @@
                         <button type="submit" style="margin-bottom: 10px;">View Profile</button>
                         <input type="hidden" name="patientId" value="<%= patient.patientId %>">
                     </form>
-
-                    <form action="/book" method="POST">
-                        <button type="submit">Add Note</button>
-                        <input type="hidden" name="userEmail" value=""">
-                    </form>
+                    
+                        <button name="myBtn" class="myBtn">Add Note</button>
+                        <input type="hidden" name="userId" value="<%= patient.patientId %>">
+                    
 
                 </div>
                 </div>
+
             <% } %>
             <% } else { %>
                <h1>No Patients.</h1> 
             <% } %>
         </div>
+        
 
     </main>
 </div>

@@ -128,7 +128,25 @@ const UserSchema = new Schema({
                 required: true
             }
         }]
-}
+    },
+
+    notes: {
+        patientNotes: [{
+            patientId: {
+                type: Schema.Types.ObjectId,
+                ref:'User',
+                required: true
+            },
+            note: {
+                type: Object,
+                required: true
+            },
+            date: {
+                type: Date,
+                default: Date.now
+            }
+        }]
+    }
 
 })
 
@@ -201,6 +219,19 @@ UserSchema.methods.addSession = function(newDate, duration) {
     date.push({time: newDate, duration: duration})
     const updatedDates = {availableDate: date}
     this.availableDates = updatedDates
+
+     
+    this.markModified('anything')
+    return this.save();
+}
+
+
+UserSchema.methods.addNote = function(note, patientId, therapistId) {
+
+    const notey = [...this.notes.patientNotes]
+    notey.push({patientId: patientId, note: note})
+    const updatedNote = {patientNotes: notey}
+    this.notes = updatedNote
 
      
     this.markModified('anything')

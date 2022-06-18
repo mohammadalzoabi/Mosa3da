@@ -67,6 +67,78 @@
                     </div>
                 </div>
             </div>
+
+            <form action="/addNote/<%=patient._id%>" method="POST">
+        
+                <div class="page-content page-container" id="page-content">
+                  <div class="padding"">
+                    
+                    <div class=" container d-flex justify-content-center">
+                      <div class="col-xl-12 col-md-12">
+                        <div class="card user-card-full">
+                          <div class="row m-l-0 m-r-0">
+      
+                            <div class="col">
+                              <div class="card-block">
+                                <h4 class="m-b-20 p-b-5 b-b-default f-w-600">Add Note</h4>
+                                <div class="row">
+                                  <div class="col">
+      
+                                    <div class="row" style="margin-bottom: 30px;">
+                                      <p class="m-b-10 f-w-600">Patient: <%= patient.name %></p>
+                                      <div class="form-group">
+                                        <input style=" border-radius:10px;" type="name" id="note" name="note"
+                                          class="form-control" placeholder="Note" />
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="text-center" style="margin-top: -50px;">
+                                <button type="submit" class="btn btn-primary btn-block"
+                                  style="background-color: #79B4B7; border-color: #79B4B7; border-radius: 50px; font-size: 1em; padding-right: 1cm; padding-left: 1cm; margin-top: 10px; margin-bottom: 10px;">Add Note</button>
+                              </div>
+                    
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+      
+      
+                <hr class="solid">
+
+                <h4 class="text-center" style="margin-top: 25px;">Notes</h4>
+
+                <% if(user.notes.patientNotes.length > 0) { %>
+            
+                  <% for (let note of user.notes.patientNotes) { %>
+                    <% if(String(note.patientId) === String(patient._id)) { %>
+                      <div class="container">
+                        <div class="row" >
+                          <div class="col-lg-12">
+                            <div class="card border-0 mb-4 mt-4" style="background-color: #F8F0DF; border-radius:10px; box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.26);">
+                              <div class="d-flex";>
+                                  <div class="flex-fill">
+                                    <div class="card-body">
+                                        <div class="" id="therapistName">Note: <%= note.note.note %></div>
+                                        <div class="" id="therapistName">Date: <%= moment(note.date).format('YYYY-MM-DD') %></div>
+                                    </div>
+                                  </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                </div>
+                <% } %>
+                <% } %>
+                <% } %>
+
+
         </div>
 
 
