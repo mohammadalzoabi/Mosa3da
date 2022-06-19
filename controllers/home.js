@@ -16,13 +16,17 @@ exports.getIndex = (req, res, next) => {
 exports.getDashboard = (req, res, next) => {
     User.findOne({email : req.user.email})
         .then(user => {
+            if(user.role !=='admin') {
             res.render('dashboard', {
                 user: user,
                 sessions: user.bookings,
                 pageTitle: 'Dashboard', 
                 path: '/dashboard',
-                pageName: 'dashboard',
+                pageName: 'dashboard'
             });
+        } else {
+            res.redirect('/applications')
+        }
         })
         .catch(err => {
             console.log('didnt find user account!')

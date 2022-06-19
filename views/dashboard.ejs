@@ -8,11 +8,12 @@
 
   <%- include('./includes/navbar.ejs') %>
   <div class="container"">
-  <main style="margin-top: 100px;">
+  
 
     <% if(user.role === 'customer') { %>
       <% if(sessions.booking.length > 0) { %>
 
+        <main style="margin-top: 50px;">
         <% for (let session of sessions.booking) { %>
           <div class="container">
             <div class="row" >
@@ -36,7 +37,7 @@
                           <input type="hidden" name="therapist" id="therapist" value="<%= session.bookingId %>">
                           <input type="hidden" name="patient" id="patient" value="<%= user._id %>">
                           <% } else { %>
-                          <button disabled class="btn btn-primary" style="background-color: #79B4B7; border-color: #79B4B7; border-radius: 50px; font-size: 1em; padding-right: 1cm; padding-left: 1cm; margin-right: 10px;">Join</button>
+                          <button  class="btn btn-primary" style="background-color: #79B4B7; border-color: #79B4B7; border-radius: 50px; font-size: 1em; padding-right: 1cm; padding-left: 1cm; margin-right: 10px;">Join</button>
                           <% }%>
                         </form>
                       </div>
@@ -51,11 +52,10 @@
       <% } %>
 
     <% } %>
-
-
+  </main>
     <% if(user.role === 'therapist') { %>
       <% if(sessions.booking.length > 0) { %>
-
+        <main style="margin-top: 50px;">
         <% for (let session of sessions.booking) { %>
           <div class="container">
             <div class="row" >

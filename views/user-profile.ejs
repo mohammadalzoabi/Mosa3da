@@ -4,8 +4,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     </head>
 
+    <%- include('./includes/navbar.ejs') %>
     <body>
-        <%- include('./includes/navbar.ejs') %>
 
             <div class="container">
                 <div class="page-content page-container" id="page-content" style="margin-top: 75px; ">
@@ -58,12 +58,14 @@
                                                             <%= user.gender %>
                                                         </h5>
                                                     </div>
+                                                    <% if(user.role !== 'admin') {%>
                                                     <div class="col-sm-6" style="margin-top: 35px;">
                                                         <p class="m-b-10 f-w-600">Member Since</p>
                                                         <h5 class="text-muted f-w-400">
                                                             <%= moment(user.joinDate).utc().format('YYYY-MM-DD') %>
                                                         </h5>
                                                     </div>
+                                                    <%}%>
                                                 </div>
                                             </div>
                                         </div>
@@ -75,7 +77,7 @@
                 </div>
             </div>
 
-            <div class="text-center" style="margin-top: -50px;">
+            <div class="text-center">
                 <i class="fas fa-edit"></i> <a class="lead text-center" href="/edit-account"
                     style="color: black; font-weight: 300;"> Edit Profile </a>
             </div>

@@ -3,8 +3,8 @@
   <link rel="stylesheet" type="text/css" href="/css/account.css">
   </head>
 
+  <%- include('./includes/navbar.ejs') %>
   <body>
-    <%- include('./includes/navbar.ejs') %>
       <div class="container">
         <form action="/edit-account" method="POST" enctype="multipart/form-data">
 
@@ -360,7 +360,7 @@
           </div>
 
 
-          <div class="text-center" style="margin-top: -50px;">
+          <div class="text-center">
             <button type="submit" class="btn btn-primary btn-block"
               style="background-color: #79B4B7; border-color: #79B4B7; border-radius: 50px; font-size: 1em; padding-right: 1cm; padding-left: 1cm; margin-top: 10px;">Save
               Changes</button>
