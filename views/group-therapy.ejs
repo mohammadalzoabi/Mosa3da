@@ -8,7 +8,7 @@
 
   <%- include('./includes/navbar.ejs') %>
   <div class="container">
-  <main style="margin-top: 100px;">
+  <main style="margin-top: 50px;">
 
     <% if(user.role === 'admin') { %>
       <div class="text-center">
@@ -28,11 +28,32 @@
                 <div class="d-flex";>
                     <div class="flex-fill">
                       <div class="card-body">
-                          <div class="mb-3">Room: <%= group.roomName %></div>
-                        <div class="font-weight-bold">Date: Every <%= group.roomDate %> </div>
-                        <div class="font-weight-bold">Time: <%= group.roomTime %>:00 PM </div>
-                        <div class="mb-3">Duration: <%= group.roomDuration %></div>
-                        <div class="" id="therapistName">Therapist: <%= group.roomTherapist %></div>
+
+                        <div class="flex-container" style="display: flex;">
+                          <div class="mb-3" style="font-weight: 500;">Room:&nbsp;</div>
+                          <div class="mb-3" > <%= group.roomName %> </div>
+                        </div>
+
+                        <div class="flex-container" style="display: flex;">
+                          <div class="font-weight-bold" style="font-weight: 500;">Date:&nbsp;</div>
+                          <div class="font-weight-bold">Every <%= group.roomDate %> </div>
+                        </div>
+
+                        <div class="flex-container" style="display: flex;">
+                          <div class="font-weight-bold" style="font-weight: 500;">Time:&nbsp;</div>
+                          <div class="font-weight-bold"><%= group.roomTime %>:00 PM </div>
+                        </div>
+
+                        <div class="flex-container" style="display: flex;">
+                          <div class="font-weight-bold" style="font-weight: 500;">Duration:&nbsp;</div>
+                          <div class="mb-3">Duration: <%= group.roomDuration %></div>
+                        </div>
+
+                        <div class="flex-container" style="display: flex;">
+                          <div class="font-weight-bold" style="font-weight: 500;">Therapist:&nbsp;</div>
+                          <div class="" id="therapistName"><%= group.roomTherapist %></div>
+                        </div>
+
                       </div>
                     </div>
                     <div class="d-flex justify-content-center align-items-center">

@@ -13,8 +13,21 @@ exports.addSession = (req, res, next) => {
     newDate = req.body.sessionTime;
     const duration = req.body.duration;
 
+    let errors = []
 
-    User.findOne({email: req.user.email})
+    if(!newDate || !duration) {
+        errors.push({ msg: "Please Select a Date" });
+    }
+
+    if(errors.length > 0) {
+        res.render("user-profile", {
+            errors,
+            user: req.user,
+            pageTitle: "Account",
+            pageName: "account",
+          });
+    } else {
+        User.findOne({email: req.user.email})
                 .then(therapist => {
                     return req.user.addSession(newDate, duration) 
                 })
@@ -27,6 +40,10 @@ exports.addSession = (req, res, next) => {
                     error.httpStatusCode = 500;
                     return next(error);
                   });
+    }
+
+
+    
 }
 
 // Book a Session

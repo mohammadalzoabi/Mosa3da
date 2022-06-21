@@ -1,4 +1,5 @@
 const User = require('../models/User')
+const Reports = require('../models/Reports')
 const GroupTherapy = require('../models/GroupTherapy')
 
 const ITEMS_PER_PAGE = 9;
@@ -266,4 +267,54 @@ exports.getAccount = (req,res,next) => {
             error.httpStatusCode = 500;
             return next(error);
           });
+}
+
+// Get Report a Problem Page
+exports.getReport = (req, res, next) => {
+    res.render('report', {
+        pageName: 'report',
+        path: '/report',
+        pageTitle: 'Report',
+        user: req.user
+    })
+}
+
+// Post a Report
+exports.postReport = (req, res, next) => {
+    const { title, email, description } = req.body;
+    let errors = [];
+
+    //Check Required Fields
+    if (!title ||!email || !description) {
+        errors.push({ msg: "Can't leave the fields empty" });
+    }
+
+    if(errors.length > 0) {
+        res.render("report", {
+            errors,
+            title,
+            email,
+            description,
+            pageTitle: "Report",
+            pageName: "report",
+            user: req.user
+          });
+    } else {
+        const newReport = new Reports({
+            title,
+            email,
+            description
+          });
+
+          newReport
+              .save()
+              .then((report) => {
+                req.flash("success_msg", "Report Sent Successfully");
+                console.log("Report Sent!");
+                res.redirect('/account')
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+    }
 }

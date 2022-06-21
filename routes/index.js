@@ -37,5 +37,8 @@ router.get('/group-video/:roomId', isNotLoggedIn, siteController.getGroupTherapy
 // User Account
 router.get('/account', isNotLoggedIn, siteController.getAccount)
 
+//Report a Problem
+router.get('/report', isNotLoggedIn, siteController.getReport)
+router.post('/report', isNotLoggedIn, siteController.postReport)
 
 module.exports = router

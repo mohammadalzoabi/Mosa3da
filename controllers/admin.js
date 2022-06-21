@@ -1,4 +1,5 @@
 const User = require("../models/User");
+const Reports = require("../models/Reports");
 const GroupTherapy = require("../models/GroupTherapy");
 const fileSystem = require("fs");
 const jwt = require("jsonwebtoken");
@@ -183,3 +184,46 @@ exports.postDeleteGroupTherapies = (req, res, next) => {
                       });
   
 };
+
+
+// Get Reports Page
+exports.getReports = (req, res, next) => {
+  
+  Reports.find()
+          .then((reports) => {
+            res.render("reports", {
+              user: req.user,
+              pageName: "reports",
+              reports: reports,
+              pageTitle: "Reports",
+              path: "/reports",
+          })
+        })
+          .catch((err) => {
+            console.log(err);
+            const error = new Error(err);
+            error.httpStatusCode = 500;
+            return next(error);
+          });
+};
+
+// Delete Report
+exports.deleteReport = (req, res, next) => {
+  const reportId = req.body.reportId;
+
+  Reports.findOne({ _id: reportId })
+    .then((report) => {
+      return Reports.deleteOne({ _id: reportId }).then((results) => {
+        console.log("Declined Therapist");
+        res.redirect("/reports");
+      });
+    })
+    .catch((err) => {
+      const error = new Error(err);
+      error.httpStatusCode = 500;
+      return next(error);
+    });
+}
+
+
+      

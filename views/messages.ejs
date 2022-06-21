@@ -20,7 +20,10 @@
                           <div class="flex-fill">
                             <div class="card-body">
                               <% if(user.role === 'customer') { %>
-                              <div class="" id="therapistName">Therapist: <%= therapist.therapistName %></div>
+                                <div class="flex-container" style="display: flex;">
+                                  <div class="font-weight-bold" style="font-weight: 500;">Therapist:&nbsp;</div>
+                                  <div class="" id="therapistName"><%= therapist.therapistName %></div>
+                                </div>
                               <% } %>
                             </div>
                           </div>

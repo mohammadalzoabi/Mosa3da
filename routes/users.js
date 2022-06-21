@@ -40,4 +40,6 @@ router.get("/logout", authController.getLogout);
 router.get("/edit-account", isNotLoggedIn, authController.getEditAccount);
 router.post("/edit-account", upload.single("image"), isNotLoggedIn, authController.postEditAccount);
 
+
+
 module.exports = router;

@@ -52,6 +52,9 @@
                 <a class="nav-link <%= pageName === 'applications' ? 'active' : '' %>" href="/applications">Review Applications</a>
               </li>
               <li class="nav-item">
+                <a class="nav-link <%= pageName === 'reports' ? 'active' : '' %>" href="/reports">Reports</a>
+              </li>
+              <li class="nav-item">
                 <a class="nav-link <%= pageName === 'group therapy' ? 'active' : '' %>" href="/group-therapy">Group Therapy</a>
               </li>
             </ul>
@@ -68,10 +71,13 @@
                 <% } else { %>
               <li><a class="dropdown-item text-center" href="/account">Profile</a></li>
               <%  } %>
+              <li><hr class="dropdown-divider"></li>
               <li><a class="dropdown-item text-center" href="/change-password">Change Password</a></li>
               
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item text-center" href="/logout">Log out</a></li>
+              <%if (user.role !== 'admin') { %>
+              <li><a class="dropdown-item text-center" href="/report">Report a Problem</a></li>
+              <%  } %>
+              <li><a class="dropdown-item text-center" style="color: #FF6961;" href="/logout">Log out</a></li>
             </ul>
           </li>
     </ul>

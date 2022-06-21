@@ -19,9 +19,17 @@ router.post('/accept-application', isNotLoggedIn, isNotAdmin, adminController.po
 router.post('/decline-application', isNotLoggedIn, isNotAdmin, adminController.postDeclineApplication)
 
 
-router.post('/add-group-therapy', isNotLoggedIn, isNotAdmin, adminController.postAddGroupTherapy)
+// Get Group Therapy Page
 router.get('/add-group-therapy', isNotLoggedIn, isNotAdmin, adminController.getAddGroupTherapies)
+
+// Create or Delete Group Therapy Rooms
+router.post('/add-group-therapy', isNotLoggedIn, isNotAdmin, adminController.postAddGroupTherapy)
 router.post('/delete-group-therapy', isNotLoggedIn, isNotAdmin, adminController.postDeleteGroupTherapies)
+
+
+// Get Reports Page
+router.get('/reports', isNotLoggedIn, isNotAdmin, adminController.getReports);
+router.post('/reports', isNotLoggedIn, isNotAdmin, adminController.deleteReport);
 
 
 module.exports = router

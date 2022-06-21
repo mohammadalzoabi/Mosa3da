@@ -44,9 +44,32 @@
                                                     </h5>
                                                 </div>
                                                 
-                                               
-
                                                 <div class="col-sm-6"">
+                                                  <p class="m-b-10 f-w-600">Phone Number</p>
+                                                  <h5 class="text-muted f-w-400">
+                                                    <% if(user) { %>
+                                                      <% var flag = false %>
+                                                      <% for(var i=0; i < patient.therapists.therapist.length ; i++) { %>
+
+                                                          <% if(user._id.equals(patient.therapists.therapist[i].therapistId)) { %>
+                                                              <% flag = true %>
+                                                              <% } %>
+                                                                  <% } %>
+
+                                                                  <%if(flag === true) { %>
+                                                                      <h5 class="text-muted f-w-400">
+                                                                          <%= patient.phoneNumber %>
+                                                                      </h5>
+                                                                      <% } else { %>
+                                                                          <h5 class="text-muted f-w-400">
+                                                                              Hidden
+                                                                          </h5>
+                                                                      <% } %>
+                                                                      <% } %>
+                                                  </h5>
+                                              </div>
+
+                                                <div class="col-sm-6" style="margin-top: 35px;">
                                                     <p class="m-b-10 f-w-600">Gender</p>
                                                     <h5 class="text-muted f-w-400">
                                                         <%= patient.gender %>
