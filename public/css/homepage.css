@@ -2,6 +2,10 @@ body {
      background-color: #FEFBF3;
      padding-top: 65px;
      text-align: center;
+     width: 100%;
+     height: 100%;
+     margin: 0px;
+     overflow-x: hidden;
 }
 .image{
      display: flex;

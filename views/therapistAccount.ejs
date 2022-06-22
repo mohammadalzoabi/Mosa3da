@@ -113,7 +113,7 @@
                             <p style="margin: 15px;"></p>
                             <div class="buttons text-center" style="display: inline-block;">
 
-                                <form action="/book" method="POST">
+                                <form action="/payment/<%= date._id %>" method="GET">
                                     <button type="submit" style="margin-bottom: 10px;">Book</button>
                                     <input type="hidden" name="userEmail" value="<%= therapist.email %>">
                                     <input type="hidden" name="date" value="<%= date.time %>">

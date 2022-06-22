@@ -48,11 +48,13 @@ exports.addSession = (req, res, next) => {
 
 // Book a Session
 exports.bookTherapist = (req, res, next) => {
+
     const therapistEmail = req.body.userEmail;
     let therapistName
     const date = req.body.date;
     const duration = req.body.duration;
     const sessionId = req.body.sessionId;
+
     
     User.findOne({email: therapistEmail})
                     .then(therapist => { 
@@ -73,5 +75,60 @@ exports.bookTherapist = (req, res, next) => {
                       });
 };
 
+// Get Payment Page
+exports.getPayment = (req, res, next) => {
+    const therapistEmail = req.query.userEmail;
+    var therapistName
+    const date = req.query.date;
+    const duration = req.query.duration;
+    const sessionId = req.query.sessionId;
+
+    User.findOne({email: therapistEmail})
+                    .then(therapist => { 
+                        therapistName = therapist.name
+                        res.render('payment', {
+                            user: req.user,
+                            therapistName: therapistName,
+                            therapistEmail: therapistEmail,
+                            date: date,
+                            duration: duration,
+                            sessionId: sessionId
+                        })
+                    })
+                    .catch(err => {
+                        const error = new Error(err);
+                        error.httpStatusCode = 500;
+                        return next(error);
+                      });
+
+    
+}
+
+// Delete Date
+exports.deleteSession = (req, res, next) => {
+    const email = req.body.email;
+    const sessionId = req.body.session
+    var therapist
+
+    console.log(sessionId);
+
+
+    User.findOne({email: email})
+                    .then(user => { 
+                        user.availableDates.availableDate.pull({_id: sessionId})
+                        return user.save()
+                        
+                    })
+                    .then(results => { 
+                        req.flash("success_msg", "Session Deleted");
+                        res.redirect('/account')
+                    })
+                    .catch(err => {
+                        const error = new Error(err);
+                        error.httpStatusCode = 500;
+                        return next(error);
+                      });
+
+}
 
 exports.postBooking

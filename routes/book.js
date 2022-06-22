@@ -11,6 +11,11 @@ router.post('/add-new-session', isNotLoggedIn, bookController.addSession)
 // Book Session With Therapist
 router.post('/book', isNotLoggedIn, bookController.bookTherapist);
 
+// Payment
+router.get('/payment/:sessionId', isNotLoggedIn, bookController.getPayment)
+
+router.post('/delete-session/:sessionId', isNotLoggedIn, bookController.deleteSession)
+
 
 
 
