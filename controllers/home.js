@@ -131,7 +131,10 @@ exports.addNote = (req, res, next) => {
       .then((user) => {
         if(req.user.role === 'therapist') {
             req.user.addNote(note, userId, user);
-            res.redirect('/users/' + userId)
+            setTimeout(() => {
+                
+                res.redirect('/users/' + userId)
+              }, 200)
         } else {
             res.redirect('/dashboard')
         }

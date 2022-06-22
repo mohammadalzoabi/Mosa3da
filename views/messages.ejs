@@ -1,6 +1,5 @@
 <%- include('./includes/head.ejs') %>
     <link rel="stylesheet" type="text/css" href="/css/main.css">
-    <link rel="stylesheet" type="text/css" href="/css/chat.css">
 </head>
 
 <body>
@@ -46,6 +45,8 @@
         <% } else { %>
           <h1> No Chats.</h1>
           <% } %>
+
+
         <% } else if(user.role === 'therapist') {%>
             <% if(user.patients.patient.length > 0) { %>
     
@@ -78,12 +79,12 @@
                       </div>
               </div>
               <% } %>
-              <% } %>
 
 
 
         <% } else { %>
           <h1> No Chats.</h1>
+          <% } %>
           <% } %>
       </main>
     </div>
