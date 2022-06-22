@@ -595,7 +595,7 @@ exports.getEditAccount = (req, res, next) => {
 
 // Save Account Changes
 exports.postEditAccount = (req, res, next) => {
-  const { name, email, gender, specialties } = req.body;
+  const { name, email, gender, specialties, phoneNumber, countryCode } = req.body;
   const image = req.file;
   var x;
 
@@ -648,6 +648,9 @@ exports.postEditAccount = (req, res, next) => {
         if (image) {
           fileHelper.deleteFile(user.image);
           user.image = image.path;
+        }
+        if(phoneNumber) {
+          user.phoneNumber = "+"+countryCode+phoneNumber
         }
 
         return user.save().then((result) => {

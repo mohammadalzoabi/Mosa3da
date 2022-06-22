@@ -60,6 +60,7 @@ exports.bookTherapist = (req, res, next) => {
                     .then(therapist => { 
                         therapistName = therapist.name
                         req.user.bookTherapist(therapist, date, duration);
+                        console.log('im here');
                         //therapist.availableDates.availableDate.createIndex({"Time": 1}, {expireAfterSeconds: 0})
                         return therapist.availableDates.availableDate.pull({_id: sessionId})
                     })
