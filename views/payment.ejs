@@ -33,12 +33,17 @@
 
           <div class="flex-container" style="display: flex;">
             <div class="font-weight-bold" style="font-weight: 500;">Duration:&nbsp;</div>
-            <div class=""><%= duration %></div>
+            <div class="font-weight-bold"><%= duration %></div>
           </div>
 
           <div class="flex-container" style="display: flex;">
             <div class="font-weight-bold" style="font-weight: 500;">Therapist:&nbsp;</div>
-            <div class="mb-3" id="therapistName"><%= therapistName %></div>
+            <div class="font-weight-bold" id="therapistName"><%= therapistName %></div>
+          </div>
+
+          <div class="flex-container" style="display: flex;">
+            <div class="font-weight-bold" style="font-weight: 500;">Cost:&nbsp;</div>
+            <div class="mb-3" id="cost"><%= cost %></div>
           </div>
 
           <!-- Card Number -->
@@ -64,15 +69,15 @@
             </div>
             <div class="year">
               <select name="Year">
-                <option value="2016">2022</option>
-                <option value="2017">2023</option>
-                <option value="2018">2024</option>
-                <option value="2019">2025</option>
-                <option value="2020">2026</option>
-                <option value="2021">2027</option>
-                <option value="2022">2028</option>
-                <option value="2023">2029</option>
-                <option value="2024">2030</option>
+                <option value="2022">2022</option>
+                <option value="2023">2023</option>
+                <option value="2024">2024</option>
+                <option value="2025">2025</option>
+                <option value="2026">2026</option>
+                <option value="2027">2027</option>
+                <option value="2028">2028</option>
+                <option value="2029">2029</option>
+                <option value="2030">2030</option>
               </select>
             </div>
           </div>
@@ -87,7 +92,7 @@
         </div>
         <form action="/book" method="POST">
           <button disabled type="submit" class="btn btn-primary btn-block" id="button"
-            style="background-color: #79B4B7; border-color: #79B4B7; border-radius: 50px; font-size: 1em; padding-right: 1cm; padding-left: 1cm; margin-top: 25px; text-align: center; width: 100%;">Proceed</button>
+            style="background-color: #79B4B7; border-color: #79B4B7; border-radius: 50px; font-size: 1em; padding-right: 1cm; padding-left: 1cm; margin-top: 60px; text-align: center; width: 100%;">Proceed</button>
                                     <input type="hidden" name="userEmail" value="<%= therapistEmail %>">
                                     <input type="hidden" name="date" value="<%= date %>">
                                     <input type="hidden" name="duration" value="<%= duration %>">

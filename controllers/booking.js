@@ -12,6 +12,7 @@ exports.addSession = (req, res, next) => {
     var newDate = new Date()
     newDate = req.body.sessionTime;
     const duration = req.body.duration;
+    var cost;
 
     let errors = []
 
@@ -27,9 +28,21 @@ exports.addSession = (req, res, next) => {
             pageName: "account",
           });
     } else {
+        if(duration == "15 Minutes") {
+            cost = "$15"
+        }
+        if(duration == "30 Minutes") {
+            cost = "$30"
+        }
+        if(duration == "45 Minutes") {
+            cost = "$45"
+        }
+        if(duration == "60 Minutes") {
+            cost = "$60"
+        }
         User.findOne({email: req.user.email})
                 .then(therapist => {
-                    return req.user.addSession(newDate, duration) 
+                    return req.user.addSession(newDate, duration, cost) 
                 })
                 .then(result => {
                     
@@ -54,15 +67,15 @@ exports.bookTherapist = (req, res, next) => {
     const date = req.body.date;
     const duration = req.body.duration;
     const sessionId = req.body.sessionId;
+    
 
     
     User.findOne({email: therapistEmail})
                     .then(therapist => { 
                         therapistName = therapist.name
-                        req.user.bookTherapist(therapist, date, duration);
+                        req.user.bookTherapist(therapist, date, duration, sessionId);
                         console.log('im here');
-                        //therapist.availableDates.availableDate.createIndex({"Time": 1}, {expireAfterSeconds: 0})
-                        return therapist.availableDates.availableDate.pull({_id: sessionId})
+                        
                     })
                     .then(result => {
                         sendAppointmentToTherapistEmail(therapistEmail, therapistName, req.user.name, date, duration)
@@ -83,6 +96,7 @@ exports.getPayment = (req, res, next) => {
     const date = req.query.date;
     const duration = req.query.duration;
     const sessionId = req.query.sessionId;
+    const cost = req.query.cost;
 
     User.findOne({email: therapistEmail})
                     .then(therapist => { 
@@ -93,6 +107,7 @@ exports.getPayment = (req, res, next) => {
                             therapistEmail: therapistEmail,
                             date: date,
                             duration: duration,
+                            cost: cost,
                             sessionId: sessionId
                         })
                     })
@@ -109,9 +124,6 @@ exports.getPayment = (req, res, next) => {
 exports.deleteSession = (req, res, next) => {
     const email = req.body.email;
     const sessionId = req.body.session
-    var therapist
-
-    console.log(sessionId);
 
 
     User.findOne({email: email})
@@ -121,7 +133,7 @@ exports.deleteSession = (req, res, next) => {
                         
                     })
                     .then(results => { 
-                        req.flash("success_msg", "Session Deleted");
+                        req.flash("success_msg", "Date Removed");
                         res.redirect('/account')
                     })
                     .catch(err => {

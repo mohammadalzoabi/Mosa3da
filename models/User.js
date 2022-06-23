@@ -98,6 +98,11 @@ const UserSchema = new Schema({
                 duration: {
                     type: String,
                     required: true
+                },
+
+                cost: {
+                    type: String,
+                    required: true
                 }
         }]
     },
@@ -150,7 +155,7 @@ const UserSchema = new Schema({
 
 })
 
-UserSchema.methods.bookTherapist = function(therapist, date, duration) {
+UserSchema.methods.bookTherapist = function(therapist, date, duration, sessionId) {
 
     const booked = [...this.bookings.booking]
     booked.push({bookingId: therapist._id, dateAndTime: date, duration: duration, therapistName: therapist.name, customerName: this.name})
@@ -176,6 +181,7 @@ UserSchema.methods.bookTherapist = function(therapist, date, duration) {
             {
                 console.log('Already Booked')
                 flag = 1
+                therapist.availableDates.availableDate.pull({_id: sessionId})
                 return therapist.save(), this.save();
             }
         }
@@ -191,6 +197,7 @@ UserSchema.methods.bookTherapist = function(therapist, date, duration) {
             patientName.push({patientId: this._id, patientName: this.name})
             const updatedPatient = {patient: patientName}
             therapist.patients = updatedPatient
+            therapist.availableDates.availableDate.pull({_id: sessionId})
 
             return therapist.save(), this.save();
         }
@@ -205,7 +212,8 @@ UserSchema.methods.bookTherapist = function(therapist, date, duration) {
         patientName.push({patientId: this._id, patientName: this.name})
         const updatedPatient = {patient: patientName}
         therapist.patients = updatedPatient
-
+        therapist.availableDates.availableDate.pull({_id: sessionId})
+        
         return therapist.save(), this.save();
     }
 
@@ -213,10 +221,10 @@ UserSchema.methods.bookTherapist = function(therapist, date, duration) {
 
 }
 
-UserSchema.methods.addSession = function(newDate, duration) {
+UserSchema.methods.addSession = function(newDate, duration, cost) {
 
     const date = [...this.availableDates.availableDate]
-    date.push({time: newDate, duration: duration})
+    date.push({time: newDate, duration: duration, cost: cost})
     const updatedDates = {availableDate: date}
     this.availableDates = updatedDates
 
