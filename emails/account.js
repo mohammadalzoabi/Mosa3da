@@ -20,9 +20,10 @@ const sendWelcomeEmail = (email, name) => {
       <body style="color: black">
                <h3>Hello ${name},</h3>
 
-               We are <strong>Mosa3da</strong> team and we would like to thank you for signing up to our service.<br><br>
+               We are <strong>Mosa3da</strong> team, and we would like to thank you for signing up to our service.<br><br>
 
-               We would love to hear what you think of <strong>Mosa3da</strong> and if there is anything we can improve. If you have any questions, please reply to this email. We are always happy to help!<br><br>
+               We would love to hear what you think of <strong>Mosa3da</strong>, and if there is anything we can improve.<br>
+               If you have any questions, please reply to this email. We are always happy to help!<br><br>
 
                Thank you,<br>
                <strong>Mosa3da Team</strong>
@@ -57,7 +58,7 @@ const sendResetPasswordEmail = (email, name, link) => {
            <h3>Hello ${name},</h3>
          
            <h4>
-               Here is your link to reset your Mosa3da account password:
+               Here is your link to reset your Mosa3da account's password:
                <a href="${link}">Click Here</a>
            </h4>
 
@@ -132,7 +133,7 @@ const sendJoinUsApprovalEmail = (email, name, link) => {
            <h4>
                Congratulations! Your application to join Mosa3da has been accepted. Our team has reviewed your application and we see you qualified.
                <br>
-               Please <a href="${link}">reset your password</a> to be able to sign in to your account.
+               Please <a href="${link}">set your password</a> to be able to sign in to your account.
            </h4>
            
            Thank you,<br>
@@ -168,7 +169,7 @@ const sendJoinUsRejectionEmail = (email, name) => {
            <h3>Hello ${name},</h3>
          
            <h4>
-               Your application to join Mosa3da has been reviewed by our team. We are sorry to tell you that your application did not meet the criteria of Mosa3da.
+               Your application to join Mosa3da has been reviewed by our team. We are sorry to inform you that your application did not meet the criteria of Mosa3da.
            </h4>
 
            Thank you,<br>

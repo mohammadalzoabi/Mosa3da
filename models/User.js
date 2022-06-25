@@ -186,7 +186,7 @@ UserSchema.methods.bookTherapist = function(therapist, date, duration, sessionId
             }
         }
 
-        if(flag = 0) {
+        if(flag === 0) {
                 
             const therapistName = [...this.therapists.therapist]
             therapistName.push({therapistId: therapist._id, therapistName: therapist.name})

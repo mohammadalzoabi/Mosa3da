@@ -74,7 +74,6 @@ exports.bookTherapist = (req, res, next) => {
                     .then(therapist => { 
                         therapistName = therapist.name
                         req.user.bookTherapist(therapist, date, duration, sessionId);
-                        console.log('im here');
                         
                     })
                     .then(result => {
